@@ -36,6 +36,7 @@ export const theme = extendTheme(
       },
       secondary: 'var(--general-secondary-color)',
       success: 'var(--general-success)',
+      danger: 'var(--general-danger)',
       warning: 'var(--general-warning)',
       grey: {
         _default: 'var(--general-grey)',
