@@ -14,7 +14,149 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  name         String?
+  nickname     String?
+  profileImgId Int?
+  badgeId      Int?
+  createdDate  DateTime @default(now())
+  modifiedDate DateTime @updatedAt
+
+  profileImg Image? @relation("ProfileImg", fields: [profileImgId], references: [id])
+  badge      Badge? @relation("UserBadge", fields: [badgeId], references: [id])
+
+  eventHolders   EventHolder[]
+  missionHolders MissionHolder[]
+  badgeHolders   BadgeHolder[]
+}
+
+model Event {
+  id             Int             @id @default(autoincrement())
+  addr1          String
+  addr2          String?
+  cat            String
+  startDate      DateTime
+  endDate        DateTime
+  lat            Float
+  lng            Float
+  tel            String
+  title          String
+  tag            EventTag
+  message        String?
+  info           String?
+  mainImgId      Int?
+  thumbnailImgId Int?
+  createdDate    DateTime        @default(now())
+  modifiedDate   DateTime        @updatedAt
+  eventHolders   EventHolder[]
+  missionHolders MissionHolder[]
+
+  mainImg      Image? @relation("MainImage", fields: [mainImgId], references: [id])
+  thumbnailImg Image? @relation("ThumbnailImage", fields: [thumbnailImgId], references: [id])
+}
+
+model Mission {
+  id             Int             @id @default(autoincrement())
+  title          String
+  info           String
+  difficulty     Difficulty
+  tag            MissionTag
+  startTime      DateTime
+  endTime        DateTime
+  missionImgId   Int?
+  createdDate    DateTime        @default(now())
+  modifiedDate   DateTime        @updatedAt
+  missionHolders MissionHolder[]
+  missionImg     Image?          @relation("MissionImg", fields: [missionImgId], references: [id])
+}
+
+model Image {
+  id                   Int             @id @default(autoincrement())
+  src                  String
+  alt                  String
+  createdDate          DateTime        @default(now())
+  modifiedDate         DateTime        @updatedAt
+  users                User[]          @relation("ProfileImg")
+  missions             Mission[]       @relation("MissionImg")
+  missionHolders       MissionHolder[]
+  eventMainImages      Event[]         @relation("MainImage")
+  eventThumbnailImages Event[]         @relation("ThumbnailImage")
+  badges               Badge[]         @relation("BadgeIcon")
+}
+
+model MissionHolder {
+  id           Int           @id @default(autoincrement())
+  status       MissionStatus
+  userId       Int
+  missionId    Int
+  imageId      Int
+  eventId      Int?
+  createdDate  DateTime      @default(now())
+  modifiedDate DateTime      @updatedAt
+
+  user    User    @relation(fields: [userId], references: [id])
+  mission Mission @relation(fields: [missionId], references: [id])
+  image   Image   @relation(fields: [imageId], references: [id])
+  event   Event?  @relation(fields: [eventId], references: [id])
+}
+
+model EventHolder {
+  id           Int      @id @default(autoincrement())
+  userId       Int
+  eventId      Int
+  createdDate  DateTime @default(now())
+  modifiedDate DateTime @updatedAt
+
+  user  User  @relation(fields: [userId], references: [id])
+  event Event @relation(fields: [eventId], references: [id])
+}
+
+model Badge {
+  id           Int           @id @default(autoincrement())
+  name         String
+  info         String
+  iconImgId    Int?
+  createdDate  DateTime      @default(now())
+  modifiedDate DateTime      @updatedAt
+  badgeHolders BadgeHolder[]
+  users        User[]        @relation("UserBadge")
+  iconImg      Image?        @relation("BadgeIcon", fields: [iconImgId], references: [id])
+}
+
+model BadgeHolder {
+  id           Int      @id @default(autoincrement())
+  badgeId      Int
+  userId       Int
+  createdDate  DateTime @default(now())
+  modifiedDate DateTime @updatedAt
+
+  badge Badge @relation(fields: [badgeId], references: [id])
+  user  User  @relation(fields: [userId], references: [id])
+}
+
+enum EventTag {
+  MARKET
+  FESTIVAL
+  PERFORM
+  ETC
+}
+
+enum MissionTag {
+  MARKET
+  FESTIVAL
+  PERFORM
+  ETC
+}
+
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+enum MissionStatus {
+  WAIT
+  REJECT
+  COMPLETE
 }
