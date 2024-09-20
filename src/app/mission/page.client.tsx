@@ -5,7 +5,7 @@ import MissionCard from '@/components/missionCard';
 import { eventTestData } from '@/constants/eventtest';
 import { missionTestData } from '@/constants/missiontest';
 
-import { Box, Button, Text, VStack, HStack, Tag } from '@chakra-ui/react';
+import { Box, Button, Text, VStack, HStack } from '@chakra-ui/react';
 
 export default function MissionPageContent() {
   return (

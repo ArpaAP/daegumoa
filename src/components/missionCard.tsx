@@ -11,7 +11,19 @@ import clockSuccess from '@/assets/icons/clock_success.svg';
 import positionIcon from '@/assets/icons/position.svg';
 
 import { Image } from '@chakra-ui/next-js';
-import { Box, Card, CardHeader, CardBody, VStack, HStack, Tag, TagLeftIcon, TagLabel, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Card,
+  CardHeader,
+  CardBody,
+  VStack,
+  HStack,
+  Tag,
+  TagLeftIcon,
+  TagLabel,
+  Text,
+  Link,
+} from '@chakra-ui/react';
 import { Mission, Event, MissionHolder } from '@prisma/client';
 import duration from 'dayjs/plugin/duration';
 
@@ -68,85 +80,87 @@ const MissionCard: React.FC<MissionCardProps> = ({ mission }) => {
     return () => clearInterval(interval); // 컴포넌트 언마운트 시 인터벌 정리
   }, [mission.startTime, mission.endTime]);
   return (
-    <Card w="100%" rounded="20" onClick={() => (window.location.href = `/mission/${mission.id}`)}>
-      <CardHeader
-        position="relative"
-        w="100%"
-        h="200"
-        backgroundImage={mission.missionImg}
-        bgSize="cover"
-        bgRepeat="no-repeat"
-        bgPosition="center"
-        borderTopRadius="20px"
-      >
-        <Box
-          position="absolute"
-          top="0"
-          left="0"
+    <Link href={`/mission/${mission.id}`} w="100%" _hover={{ textDecoration: 'none' }}>
+      <Card w="100%" rounded="20">
+        <CardHeader
+          position="relative"
           w="100%"
-          h="100%"
-          bgGradient="linear(to-t, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0))"
-          borderRadius="md"
-        />
-
-        <Tag
-          position="absolute"
-          bottom="10px"
-          right="10px"
-          color="white"
-          p="8px"
-          borderRadius="md"
-          alignItems="center"
-          rounded="10"
-          bg="rgba(255, 255, 255, 0.2)"
-          backdropFilter="blur(10px)"
-          boxShadow="0 4px 6px rgba(0, 0, 0, 0.1)" // 부드러운 그림자
+          h="200"
+          backgroundImage={mission.missionImg}
+          bgSize="cover"
+          bgRepeat="no-repeat"
+          bgPosition="center"
+          borderTopRadius="20px"
         >
-          <TagLeftIcon boxSize="16px" as={Image} src={positionIcon} alt="" />
-          <TagLabel fontSize="m" fontWeight="bold">
-            {mission.event.addr2}
-          </TagLabel>
-        </Tag>
-      </CardHeader>
-      <CardBody>
-        <VStack>
-          <HStack justifyContent="space-between" w="full" borderBottom="1px" borderColor="gray.200" pb={2}>
-            <HStack gap="4px">
-              <Tag fontSize="m" fontWeight="light" bg="secondary" color="white" rounded="5">
-                {mission.tag === 'MARKET'
-                  ? '시장'
-                  : mission.tag === 'FESTIVAL'
-                    ? '축제'
-                    : mission.tag === 'PERFORM'
-                      ? '공연/전시'
-                      : '기타'}
-              </Tag>
-              <Tag fontSize="m" fontWeight="light" bg="primary" color="white">
-                진행중
-              </Tag>
-              <Tag fontSize="m" fontWeight="light" variant="outline" color="primary">
-                {mission.difficulty === 'EASY' ? '쉬움' : mission.difficulty === 'NORMAL' ? '보통' : '어려움'}
+          <Box
+            position="absolute"
+            top="0"
+            left="0"
+            w="100%"
+            h="100%"
+            bgGradient="linear(to-t, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0))"
+            borderRadius="md"
+          />
+
+          <Tag
+            position="absolute"
+            bottom="10px"
+            right="10px"
+            color="white"
+            p="8px"
+            borderRadius="md"
+            alignItems="center"
+            rounded="10"
+            bg="rgba(255, 255, 255, 0.2)"
+            backdropFilter="blur(10px)"
+            boxShadow="0 4px 6px rgba(0, 0, 0, 0.1)" // 부드러운 그림자
+          >
+            <TagLeftIcon boxSize="16px" as={Image} src={positionIcon} alt="" />
+            <TagLabel fontSize="m" fontWeight="bold">
+              {mission.event.addr2}
+            </TagLabel>
+          </Tag>
+        </CardHeader>
+        <CardBody>
+          <VStack>
+            <HStack justifyContent="space-between" w="full" borderBottom="1px" borderColor="gray.200" pb={2}>
+              <HStack gap="4px">
+                <Tag fontSize="m" fontWeight="light" bg="secondary" color="white" rounded="5">
+                  {mission.tag === 'MARKET'
+                    ? '시장'
+                    : mission.tag === 'FESTIVAL'
+                      ? '축제'
+                      : mission.tag === 'PERFORM'
+                        ? '공연/전시'
+                        : '기타'}
+                </Tag>
+                <Tag fontSize="m" fontWeight="light" bg="primary" color="white">
+                  진행중
+                </Tag>
+                <Tag fontSize="m" fontWeight="light" variant="outline" color="primary">
+                  {mission.difficulty === 'EASY' ? '쉬움' : mission.difficulty === 'NORMAL' ? '보통' : '어려움'}
+                </Tag>
+              </HStack>
+              <Tag bg="black" color="white" rounded="20px" px="10px" py="5px">
+                <TagLeftIcon boxSize="16px" as={Image} src={checkIcon} alt="" />
+                <TagLabel fontSize="m">
+                  참여자 {mission.holders.filter((holders) => holders.status === 'COMPLETE').length}명
+                </TagLabel>
               </Tag>
             </HStack>
-            <Tag bg="black" color="white" rounded="20px" px="10px" py="5px">
-              <TagLeftIcon boxSize="16px" as={Image} src={checkIcon} alt="" />
-              <TagLabel fontSize="m">
-                참여자 {mission.holders.filter((holders) => holders.status === 'COMPLETE').length}명
-              </TagLabel>
-            </Tag>
-          </HStack>
-        </VStack>
-        <Text fontWeight="bold" color="black" fontSize="xl">
-          {mission.title}
-        </Text>
-        <HStack>
-          <Image src={message.includes('일') ? clockSuccess : clockDanger} alt="" boxSize="16px" p="0" />
-          <Text fontWeight="bold" color={message.includes('일') ? 'success' : 'danger'} fontSize="l">
-            {message}
+          </VStack>
+          <Text fontWeight="bold" color="black" fontSize="xl">
+            {mission.title}
           </Text>
-        </HStack>
-      </CardBody>
-    </Card>
+          <HStack>
+            <Image src={message.includes('일') ? clockSuccess : clockDanger} alt="" boxSize="16px" p="0" />
+            <Text fontWeight="bold" color={message.includes('일') ? 'success' : 'danger'} fontSize="l">
+              {message}
+            </Text>
+          </HStack>
+        </CardBody>
+      </Card>
+    </Link>
   );
 };
 
