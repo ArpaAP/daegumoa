@@ -12,54 +12,27 @@ import positionIcon from '@/assets/icons/position.svg';
 
 import { Image } from '@chakra-ui/next-js';
 import { Box, Card, CardHeader, CardBody, VStack, HStack, Tag, TagLeftIcon, TagLabel, Text } from '@chakra-ui/react';
+import { Mission, Event, MissionHolder } from '@prisma/client';
 import duration from 'dayjs/plugin/duration';
 
 dayjs.extend(duration);
 
 const startMessage: string = '미션이 곧 시작됩니다.';
 const endMessage: string = '종료된 미션입니다';
-
-export enum MissionType {
-  MARKET = '시장',
-  FESTIVAL = '축제',
-  PERFORM = '공연/전시',
-  ETC = '기타',
-}
-
-export enum Difficulty {
-  EASY = '쉬움',
-  MEDIUM = '보통',
-  HARD = '어려움',
-}
+type MissionWithImageAndEventAndHolder = Mission & { event: Event } & { holders: MissionHolder[] };
 
 interface MissionCardProps {
-  title: string;
-  startDate: string;
-  endDate: string;
-  missionType: MissionType;
-  difficulty: Difficulty;
-  imageUrl: string;
-  address: string;
-  count: number;
+  mission: MissionWithImageAndEventAndHolder;
 }
 
-const MissionCard: React.FC<MissionCardProps> = ({
-  title,
-  startDate,
-  endDate,
-  missionType,
-  difficulty,
-  imageUrl,
-  address,
-  count,
-}) => {
+const MissionCard: React.FC<MissionCardProps> = ({ mission }) => {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
     const interval = setInterval(() => {
       const now = dayjs(); // 현재 시간
-      const start = dayjs(startDate); // 이벤트 시작 시간
-      const end = dayjs(endDate); // 이벤트 종료 시간
+      const start = dayjs(mission.startTime); // 이벤트 시작 시간
+      const end = dayjs(mission.endTime); // 이벤트 종료 시간
 
       if (now.isBefore(start)) {
         // 현재 시간이 이벤트 시작 시간 이전일 경우
@@ -93,14 +66,14 @@ const MissionCard: React.FC<MissionCardProps> = ({
     }, 1000); // 1초마다 업데이트
 
     return () => clearInterval(interval); // 컴포넌트 언마운트 시 인터벌 정리
-  }, [startDate, endDate]);
+  }, [mission.startTime, mission.endTime]);
   return (
-    <Card w="100%" rounded="20">
+    <Card w="100%" rounded="20" onClick={() => (window.location.href = `/mission/${mission.id}`)}>
       <CardHeader
         position="relative"
         w="100%"
         h="200"
-        backgroundImage={imageUrl}
+        backgroundImage={mission.missionImg}
         bgSize="cover"
         bgRepeat="no-repeat"
         bgPosition="center"
@@ -131,7 +104,7 @@ const MissionCard: React.FC<MissionCardProps> = ({
         >
           <TagLeftIcon boxSize="16px" as={Image} src={positionIcon} alt="" />
           <TagLabel fontSize="m" fontWeight="bold">
-            {address}
+            {mission.event.addr2}
           </TagLabel>
         </Tag>
       </CardHeader>
@@ -140,23 +113,31 @@ const MissionCard: React.FC<MissionCardProps> = ({
           <HStack justifyContent="space-between" w="full" borderBottom="1px" borderColor="gray.200" pb={2}>
             <HStack gap="4px">
               <Tag fontSize="m" fontWeight="light" bg="secondary" color="white" rounded="5">
-                {missionType}
+                {mission.tag === 'MARKET'
+                  ? '시장'
+                  : mission.tag === 'FESTIVAL'
+                    ? '축제'
+                    : mission.tag === 'PERFORM'
+                      ? '공연/전시'
+                      : '기타'}
               </Tag>
               <Tag fontSize="m" fontWeight="light" bg="primary" color="white">
                 진행중
               </Tag>
               <Tag fontSize="m" fontWeight="light" variant="outline" color="primary">
-                {difficulty}
+                {mission.difficulty === 'EASY' ? '쉬움' : mission.difficulty === 'NORMAL' ? '보통' : '어려움'}
               </Tag>
             </HStack>
             <Tag bg="black" color="white" rounded="20px" px="10px" py="5px">
               <TagLeftIcon boxSize="16px" as={Image} src={checkIcon} alt="" />
-              <TagLabel fontSize="m">참여자 {count}명</TagLabel>
+              <TagLabel fontSize="m">
+                참여자 {mission.holders.filter((holders) => holders.status === 'COMPLETE').length}명
+              </TagLabel>
             </Tag>
           </HStack>
         </VStack>
         <Text fontWeight="bold" color="black" fontSize="xl">
-          {title}
+          {mission.title}
         </Text>
         <HStack>
           <Image src={message.includes('일') ? clockSuccess : clockDanger} alt="" boxSize="16px" p="0" />

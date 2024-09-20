@@ -1,7 +1,9 @@
 'use client';
 
 import MissionCard from '@/components/missionCard';
-import { MissionType, Difficulty } from '@/components/missionCard';
+
+import { eventTestData } from '@/constants/eventtest';
+import { missionTestData } from '@/constants/missiontest';
 
 import { Box, Button, Text, VStack, HStack, Tag } from '@chakra-ui/react';
 
@@ -34,38 +36,7 @@ export default function MissionPageContent() {
         </Button>
       </HStack>
       <VStack gap="20px">
-        <MissionCard
-          title="미션1"
-          startDate="2024-09-20T16:34:40Z"
-          endDate="2024-09-30T17:52:40Z"
-          missionType={MissionType.MARKET}
-          difficulty={Difficulty.EASY}
-          imageUrl="https://via.placeholder.com/150"
-          address="대구시 북구"
-          count={10}
-        />
-
-        <MissionCard
-          title="미션1"
-          startDate="2024-09-20T16:34:40Z"
-          endDate="2024-09-20T17:52:40Z"
-          missionType={MissionType.MARKET}
-          difficulty={Difficulty.EASY}
-          imageUrl="https://via.placeholder.com/150"
-          address="대구시 북구"
-          count={10}
-        />
-
-        <MissionCard
-          title="미션1"
-          startDate="2024-09-20T16:34:40Z"
-          endDate="2024-09-21T18:52:40Z"
-          missionType={MissionType.MARKET}
-          difficulty={Difficulty.EASY}
-          imageUrl="https://via.placeholder.com/150"
-          address="대구시 북구"
-          count={10}
-        />
+        <MissionCard mission={{ ...missionTestData, event: eventTestData, holders: [] }} />
       </VStack>
     </Box>
   );
