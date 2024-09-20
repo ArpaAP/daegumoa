@@ -2,7 +2,7 @@
 
 import { Text } from '@chakra-ui/react';
 
-export default function LoginPage() {
+export default function HomePage() {
   return (
     <div>
       <Text color="primary">안녕하세요!</Text>
