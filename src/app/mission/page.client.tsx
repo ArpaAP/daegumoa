@@ -1,14 +1,8 @@
 'use client';
 
-import dayjs from 'dayjs';
-
 import MissionCard from '../../components/missionCard';
 import { MissionType, Difficulty } from '../../components/missionCard';
 import { Box, Button, Text, VStack, HStack, Tag } from '@chakra-ui/react';
-import relativeTime from 'dayjs/plugin/relativeTime';
-
-// 플러그인 활성화
-dayjs.extend(relativeTime);
 
 export default function LoginPageContent() {
   return (
@@ -42,7 +36,7 @@ export default function LoginPageContent() {
         <MissionCard
           title="미션1"
           startDate="2024-09-20T16:34:40Z"
-          endDate="2024-09-20T17:52:40Z"
+          endDate="2024-09-30T17:52:40Z"
           missionType={MissionType.MARKET}
           difficulty={Difficulty.EASY}
           imageUrl="https://via.placeholder.com/150"
@@ -54,6 +48,17 @@ export default function LoginPageContent() {
           title="미션1"
           startDate="2024-09-20T16:34:40Z"
           endDate="2024-09-20T17:52:40Z"
+          missionType={MissionType.MARKET}
+          difficulty={Difficulty.EASY}
+          imageUrl="https://via.placeholder.com/150"
+          address="대구시 북구"
+          count={10}
+        />
+
+        <MissionCard
+          title="미션1"
+          startDate="2024-09-20T16:34:40Z"
+          endDate="2024-09-21T18:52:40Z"
           missionType={MissionType.MARKET}
           difficulty={Difficulty.EASY}
           imageUrl="https://via.placeholder.com/150"
