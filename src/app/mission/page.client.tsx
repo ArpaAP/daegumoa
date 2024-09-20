@@ -1,10 +1,11 @@
 'use client';
 
-import MissionCard from '../../components/missionCard';
-import { MissionType, Difficulty } from '../../components/missionCard';
+import MissionCard from '@/components/missionCard';
+import { MissionType, Difficulty } from '@/components/missionCard';
+
 import { Box, Button, Text, VStack, HStack, Tag } from '@chakra-ui/react';
 
-export default function LoginPageContent() {
+export default function MissionPageContent() {
   return (
     <Box h="100dvh" px="20px" py="30px">
       <Box px="10px">
