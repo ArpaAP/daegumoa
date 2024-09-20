@@ -1,4 +1,4 @@
-import HomePage from './page.client';
+import HomePage from './login.client';
 
 export default function Home() {
   // server fetching logic example
