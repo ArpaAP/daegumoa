@@ -43,7 +43,7 @@ export default function RegisterPage() {
   const error: SubmitErrorHandler<RegisterFormState> = (errors) => {
     toast.error(
       `입력값을 확인해주세요: ${Object.entries(errors)
-        .map(([k, v]) => `${k}: ${v.message}`)
+        .map(([k, v]) => v.message)
         .join(', ')}`,
       {
         id: 'formError',
@@ -53,7 +53,7 @@ export default function RegisterPage() {
 
   return (
     <Box px={8} py={16} className="dvh-full">
-      <form onSubmit={handleSubmit(submit)} style={{ height: '100%' }}>
+      <form onSubmit={handleSubmit(submit, error)} style={{ height: '100%' }}>
         <VStack align="left" gap={4} h="full">
           <Image src={logo} alt="Logo" width="84" height="76" />
           <Text fontSize="xl" fontWeight="semibold" color="primary.shade3" lineHeight={1.2}>
@@ -79,7 +79,7 @@ export default function RegisterPage() {
             </FormLabel>
             <Input
               id="nickname"
-              {...register('name', {
+              {...register('nickname', {
                 required: '닉네임은 필수 입력값입니다.',
               })}
             />

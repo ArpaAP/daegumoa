@@ -1,3 +1,5 @@
+import { Toaster } from 'react-hot-toast';
+
 import type { Metadata } from 'next';
 
 import { Layout } from '@/components/layouts';
@@ -21,6 +23,7 @@ export default function RootLayout({
     <html lang="ko" className={Paperlogy.variable}>
       <body>
         <Providers>
+          <Toaster position="top-center" reverseOrder={false} />
           <Layout>{children}</Layout>
         </Providers>
       </body>

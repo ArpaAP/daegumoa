@@ -79,10 +79,21 @@ export const theme = extendTheme(
         },
       },
       Input: {
+        baseStyle: {},
+        sizes: {
+          md: {
+            field: {
+              fontSize: '12px',
+            },
+          },
+        },
         variants: {
           outline: {
             field: {
               borderColor: 'grey',
+              _hover: {
+                borderColor: 'grey',
+              },
               _focusVisible: {
                 borderColor: 'primary',
               },

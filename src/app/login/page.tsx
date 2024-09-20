@@ -13,6 +13,8 @@ export default async function LoginPage() {
 
     if (user) {
       return redirect('/');
+    } else {
+      return redirect('/register');
     }
   }
 
