@@ -1,5 +1,5 @@
 import MissionPageContent from './page.client';
 
-export default function LoginPage() {
+export default function MissionPage() {
   return <MissionPageContent />;
 }
