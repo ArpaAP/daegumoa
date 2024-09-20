@@ -94,7 +94,7 @@ export default function MissionPageContent({ mission }: MissionDetailProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Box h="100dvh" px="20px" py="30px">
+    <Box h="100dvh" px="20px" py="30px" w="full" position="relative">
       <Link href="/mission" _hover={{ textDecoration: 'none' }}>
         <HStack px="10px" py="20px">
           <Image src={prevIcon} alt="" boxSize="16px" />
@@ -197,7 +197,7 @@ export default function MissionPageContent({ mission }: MissionDetailProps) {
         </Card>
       </VStack>
       <Button
-        position="fixed"
+        position="absolute"
         bottom="20px"
         h="50px"
         left="0"
