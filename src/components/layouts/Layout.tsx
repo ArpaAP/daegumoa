@@ -28,7 +28,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       borderColor="gray.200"
       css={css`
         height: 100vh;
-        overflow: hidden;
 
         @supports (height: 100dvh) {
           height: 100dvh;
