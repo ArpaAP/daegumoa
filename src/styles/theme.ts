@@ -53,19 +53,20 @@ export const theme = extendTheme(
     components: {
       Button: {
         baseStyle: {
-          fontSize: '13px',
+          fontSize: 'm',
         },
         sizes: {
           md: {
             h: '40px',
-            fontSize: '13px',
+            fontSize: 'm',
+            py: 6,
           },
         },
         variants: {
           solid: {
             bg: 'primary',
             color: 'white',
-            fontSize: '13px',
+            fontSize: 'm',
             fontWeight: 'regular',
             _hover: {
               bg: 'primary.shade1',
@@ -83,7 +84,7 @@ export const theme = extendTheme(
         sizes: {
           md: {
             field: {
-              fontSize: '12px',
+              fontSize: '14px',
             },
           },
         },

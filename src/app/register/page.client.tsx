@@ -86,7 +86,7 @@ export default function RegisterPage() {
           </FormControl>
           <Spacer />
 
-          <Button type="submit" colorScheme="primary" size="lg">
+          <Button type="submit" colorScheme="primary">
             회원가입
           </Button>
         </VStack>
