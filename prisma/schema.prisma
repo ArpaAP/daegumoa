@@ -14,7 +14,143 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  id            Int       @id @default(autoincrement())
+  email         String    @unique
+  name          String?
+  nickname      String?
+  profile       Int?
+  badgeId       Int?
+  createdDate   DateTime  @default(now())
+  modifiedDate  DateTime  @default(now())
+
+  eventHolders   EventHolder[]
+  missionHolders MissionHolder[]
+  badgeHolders   BadgeHolder[]
+  badge          Badge?     @relation(fields: [badgeId], references: [id])
+}
+
+model Event {
+  id             Int       @id @default(autoincrement())
+  addr1          String
+  addr2          String?
+  cat            String
+  startDate      DateTime
+  endDate        DateTime
+  lat            Float
+  lng            Float
+  tel            String
+  title          String
+  tag            EventTag
+  message        String?
+  info           String?
+  mainImgId        Int?
+  thumbnailImgId   Int?
+  createdDate    DateTime @default(now())
+  modifiedDate   DateTime @default(now())
+  eventHolders   EventHolder[]
+  missionHolders MissionHolder[]
+
+  mainImg         Image?    @relation("MainImage", fields: [mainImgId], references: [id])
+  thumbnailImg    Image?    @relation("ThumbnailImage", fields: [thumbnailImgId], references: [id])
+
+}
+
+model Mission {
+  id            Int       @id @default(autoincrement())
+  title         String
+  info          String
+  difficulty    Difficulty
+  tag           MissionTag
+  startTime     DateTime
+  endTime       DateTime
+  imageId       Int
+  createdDate   DateTime  @default(now())
+  modifiedDate  DateTime  @default(now())
+  missionHolders MissionHolder[]
+}
+
+model Image {
+  id           Int       @id @default(autoincrement())
+  src          String
+  alt          String
+  createdDate  DateTime  @default(now())
+  modifiedDate DateTime  @default(now())
+  missions     Mission[]
+  missionHolders MissionHolder[]
+  eventMainImage      Event[]  @relation("MainImage")
+  eventThumbnailImage Event[]  @relation("ThumbnailImage")
+  badges       Badge[]  @relation("iconImage")
+}
+
+model MissionHolder {
+  id            Int       @id @default(autoincrement())
+  status        MissionStatus
+  userId        Int
+  missionId     Int
+  imageId       Int
+  createdDate   DateTime  @default(now())
+  modifiedDate  DateTime  @default(now())
+
+  user          User      @relation(fields: [userId], references: [id])
+  mission       Mission   @relation(fields: [missionId], references: [id])
+  image         Image     @relation(fields: [imageId], references: [id])
+}
+
+model EventHolder {
+  id            Int       @id @default(autoincrement())
+  userId        Int
+  eventId       Int
+  createdDate   DateTime  @default(now())
+  modifiedDate  DateTime  @default(now())
+
+  user          User      @relation(fields: [userId], references: [id])
+  event         Event     @relation(fields: [eventId], references: [id])
+}
+
+model Badge {
+  id            Int       @id @default(autoincrement())
+  name          String
+  info          String
+  icon          Int
+  iconImage     Image    @relation(fields: [icon], references: [id])
+  createdDate   DateTime  @default(now())
+  modifiedDate  DateTime  @default(now())
+  badgeHolders  BadgeHolder[]
+}
+
+model BadgeHolder {
+  id            Int       @id @default(autoincrement())
+  badgeId       Int
+  userId        Int
+  createdDate   DateTime  @default(now())
+  modifiedDate  DateTime  @default(now())
+
+  badge         Badge     @relation(fields: [badgeId], references: [id])
+  user          User      @relation(fields: [userId], references: [id])
+}
+
+enum EventTag {
+  MARKET
+  FESTIVAL
+  PERFORM
+  ETC
+}
+
+enum MissionTag {
+  MARKET
+  FESTIVAL
+  PERFORM
+  ETC
+}
+
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+enum MissionStatus {
+  WAIT
+  REJECT
+  COMPLETE
 }
