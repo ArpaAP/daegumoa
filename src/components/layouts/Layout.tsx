@@ -20,15 +20,31 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <Box
-      w="min(100%, 800px)"
+      aspectRatio={9 / 16}
       mx="auto"
       shadow="xl"
       bg="var(--background)"
+      borderWidth={1}
+      borderColor="gray.200"
       css={css`
         height: 100vh;
+        overflow: hidden;
 
         @supports (height: 100dvh) {
           height: 100dvh;
+        }
+
+        @media (max-aspect-ratio: 9 / 19.5) {
+          width: 100%;
+        }
+
+        @media (min-aspect-ratio: 9 / 19.5) {
+          width: min(100%, 600px);
+        }
+
+        @media (min-width: 800px) {
+          width: unset;
+          aspect-ratio: 9 / 19.5;
         }
       `}
     >
