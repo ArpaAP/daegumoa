@@ -1,5 +1,5 @@
 import { Paperlogy } from './font';
-import { extendTheme, withDefaultColorScheme } from '@chakra-ui/react';
+import { defineStyleConfig, extendTheme, StyleFunctionProps, withDefaultColorScheme } from '@chakra-ui/react';
 
 export const theme = extendTheme(
   {
@@ -53,9 +53,44 @@ export const theme = extendTheme(
     components: {
       Button: {
         baseStyle: {
-          backgroundColor: 'primary',
-          borderRadius: 'lg',
-          colorScheme: 'white',
+          fontSize: '13px',
+        },
+        sizes: {
+          md: {
+            h: '40px',
+            fontSize: '13px',
+          },
+        },
+        variants: {
+          solid: {
+            bg: 'primary',
+            color: 'white',
+            fontSize: '13px',
+            fontWeight: 'regular',
+            _hover: {
+              bg: 'primary.shade1',
+            },
+          },
+        },
+        defaultProps: {
+          size: 'md',
+          variant: 'solid',
+          colorScheme: 'primary',
+        },
+      },
+      Input: {
+        variants: {
+          outline: {
+            field: {
+              borderColor: 'grey',
+              _focusVisible: {
+                borderColor: 'primary',
+              },
+            },
+          },
+        },
+        defaultProps: {
+          variant: 'outline',
         },
       },
     },
