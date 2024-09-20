@@ -45,44 +45,40 @@ model Event {
   tag            EventTag
   message        String?
   info           String?
-  mainImgId      Int?
-  thumbnailImgId Int?
+  mainImg        String?
+  thumbnailImg   String?
   createdDate    DateTime        @default(now())
   modifiedDate   DateTime        @updatedAt
   eventHolders   EventHolder[]
   missionHolders MissionHolder[]
-
-  mainImg      Image? @relation("MainImage", fields: [mainImgId], references: [id])
-  thumbnailImg Image? @relation("ThumbnailImage", fields: [thumbnailImgId], references: [id])
+  Mission        Mission[]       @relation("MissionEvent")
 }
 
 model Mission {
-  id             Int             @id @default(autoincrement())
-  title          String
-  info           String
-  difficulty     Difficulty
-  tag            MissionTag
-  startTime      DateTime
-  endTime        DateTime
-  missionImgId   Int?
-  createdDate    DateTime        @default(now())
-  modifiedDate   DateTime        @updatedAt
+  id           Int        @id @default(autoincrement())
+  title        String
+  info         String
+  difficulty   Difficulty
+  tag          MissionTag
+  startTime    DateTime
+  endTime      DateTime
+  missionImg   String
+  eventId      Int
+  createdDate  DateTime   @default(now())
+  modifiedDate DateTime   @updatedAt
+
+  events         Event           @relation("MissionEvent", fields: [eventId], references: [id])
   missionHolders MissionHolder[]
-  missionImg     Image?          @relation("MissionImg", fields: [missionImgId], references: [id])
 }
 
 model Image {
-  id                   Int             @id @default(autoincrement())
-  src                  String
-  alt                  String
-  createdDate          DateTime        @default(now())
-  modifiedDate         DateTime        @updatedAt
-  users                User[]          @relation("ProfileImg")
-  missions             Mission[]       @relation("MissionImg")
-  missionHolders       MissionHolder[]
-  eventMainImages      Event[]         @relation("MainImage")
-  eventThumbnailImages Event[]         @relation("ThumbnailImage")
-  badges               Badge[]         @relation("BadgeIcon")
+  id             Int             @id @default(autoincrement())
+  src            String
+  alt            String
+  createdDate    DateTime        @default(now())
+  modifiedDate   DateTime        @updatedAt
+  users          User[]          @relation("ProfileImg")
+  missionHolders MissionHolder[]
 }
 
 model MissionHolder {
@@ -121,7 +117,6 @@ model Badge {
   modifiedDate DateTime      @updatedAt
   badgeHolders BadgeHolder[]
   users        User[]        @relation("UserBadge")
-  iconImg      Image?        @relation("BadgeIcon", fields: [iconImgId], references: [id])
 }
 
 model BadgeHolder {
@@ -151,7 +146,7 @@ enum MissionTag {
 
 enum Difficulty {
   EASY
-  MEDIUM
+  NORMAL
   HARD
 }
 
