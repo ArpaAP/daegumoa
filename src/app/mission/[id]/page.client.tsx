@@ -94,7 +94,7 @@ export default function MissionPageContent({ mission }: MissionDetailProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Box h="100dvh" px="20px" py="30px" w="full" position="relative">
+    <Box h="100dvh" px="20px" py="30px" w="full">
       <Link href="/mission" _hover={{ textDecoration: 'none' }}>
         <HStack px="10px" py="20px">
           <Image src={prevIcon} alt="" boxSize="16px" />
@@ -103,7 +103,7 @@ export default function MissionPageContent({ mission }: MissionDetailProps) {
           </Text>
         </HStack>
       </Link>
-      <VStack gap="20px">
+      <VStack gap="20px" pb="150px">
         <Box
           position="relative"
           w="100%"
@@ -215,7 +215,6 @@ export default function MissionPageContent({ mission }: MissionDetailProps) {
           <Text fontWeight="normal">사진 업로드</Text>
         </Button>
       )}
-
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
         <ModalContent w="full" mx="20px">
