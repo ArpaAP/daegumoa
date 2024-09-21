@@ -20,6 +20,7 @@ export default function BottomMenu() {
         width="100%"
         maxWidth="600px"
         position="fixed"
+        zIndex={99999}
         left="50%"
         transform="translateX(-50%)"
         bottom={0}
