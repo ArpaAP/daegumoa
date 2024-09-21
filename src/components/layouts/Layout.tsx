@@ -29,6 +29,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       position="relative"
       css={css`
         height: 100vh;
+        overflow: scroll;
 
         @supports (height: 100dvh) {
           height: 100dvh;
