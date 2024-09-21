@@ -34,19 +34,17 @@ model User {
 model Event {
   id             Int             @id @default(autoincrement())
   addr1          String
-  addr2          String?
-  cat            String
-  startDate      DateTime
-  endDate        DateTime
+  addr2          String
+  startDate      DateTime?
+  endDate        DateTime?
   lat            Float
   lng            Float
-  tel            String
+  tel            String?
   title          String
   tag            EventTag
   message        String?
   info           String?
   mainImg        String?
-  thumbnailImg   String?
   createdDate    DateTime        @default(now())
   modifiedDate   DateTime        @default(now()) @updatedAt
   eventHolders   EventHolder[]
