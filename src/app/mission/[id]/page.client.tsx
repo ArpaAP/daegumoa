@@ -198,7 +198,7 @@ export default function MissionPageContent({ mission }: MissionDetailProps) {
       </VStack>
       <Button
         position="absolute"
-        bottom="20px"
+        bottom="80px"
         h="50px"
         left="0"
         right="0"

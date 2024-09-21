@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 
+import BottomMenu from '../navbar/BottomMenu';
 import { Box } from '@chakra-ui/react';
 import { css } from '@emotion/react';
 
@@ -42,14 +43,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         @media (min-aspect-ratio: 9 / 19.5) {
           width: min(100%, 600px);
         }
-
-        @media (min-width: 800px) {
-          width: unset;
-          aspect-ratio: 9 / 19.5;
-        }
       `}
     >
       {children}
+      <BottomMenu />
     </Box>
   );
 }

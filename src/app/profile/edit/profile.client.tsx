@@ -82,7 +82,7 @@ export default function ProfileEditContent() {
   };
 
   return (
-    <Flex direction="column" gap="30px" p="20px">
+    <Flex direction="column" gap="30px" p="20px" height="100%">
       <HStack mt="20px">
         <Link href="/profile">
           <Image w="24px" h="24px" src={prevIcon} alt="뒤로가기" />
@@ -167,7 +167,16 @@ export default function ProfileEditContent() {
             <option value="강연을 즐겨 듣는 Listener">강연을 즐겨 듣는 Listener</option>
           </Select>
         </FormControl>
-        <Button type="submit" position="fixed" left="20px" bottom="20px" right="20px" borderRadius="8px" fontSize="s">
+        <Button
+          type="submit"
+          position="absolute"
+          left="20px"
+          right="20px"
+          bottom="80px"
+          borderRadius="8px"
+          boxSizing="border-box"
+          fontSize="s"
+        >
           저장하기
         </Button>
       </form>
