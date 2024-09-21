@@ -1,5 +1,9 @@
 'use client';
 
+import positionIcon from '@/assets/icons/person.svg';
+
+import { IconPhone } from '@/icons/phone';
+import { IconPosition } from '@/icons/position';
 import { Image } from '@chakra-ui/next-js';
 import { HStack, Text, VStack } from '@chakra-ui/react';
 
@@ -21,10 +25,10 @@ export default function EventCard({ title, startDate, endDate, location, tel, im
           {startDate} ~ {endDate}
         </Text>
         <Text fontWeight="bold">{title}</Text>
-        <HStack justify="left" color="grey" pt={0.5}>
-          {/* <Image width={14} height={14} src={iconPosition} alt="" /> */}
+        <HStack justify="left" color="grey" pt={0.5} gap={1}>
+          <IconPosition boxSize="14px" />
           <Text fontSize="s">{location}</Text>
-          {/* <Image width={14} h={14} src={iconPosition} alt="" /> */}
+          <IconPhone boxSize="14px" />
           <Text fontSize="s">{tel}</Text>
         </HStack>
       </VStack>
