@@ -42,12 +42,10 @@ export default function BottomMenu() {
           display="flex"
           flexDirection="column"
           alignItems="center"
-          color={pathname === '/' ? activeColor : inactiveColor}
+          color={pathname === '/' || pathname.startsWith('events') ? activeColor : inactiveColor}
         >
           <IconHome boxSize="24px" />
-          <Text fontSize="8px" color={pathname === '/' ? activeColor : inactiveColor}>
-            홈
-          </Text>
+          <Text fontSize="8px">홈</Text>
         </Link>
         <Link
           href="/mission"
@@ -55,7 +53,7 @@ export default function BottomMenu() {
           display="flex"
           flexDirection="column"
           alignItems="center"
-          color={pathname === '/mission' ? activeColor : inactiveColor}
+          color={pathname.startsWith('/mission') ? activeColor : inactiveColor}
         >
           <IconCheckbox boxSize="24px" />
           <Text fontSize="8px">미션</Text>
@@ -66,7 +64,7 @@ export default function BottomMenu() {
           display="flex"
           flexDirection="column"
           alignItems="center"
-          color={pathname === '/ranking' ? activeColor : inactiveColor}
+          color={pathname.startsWith('/ranking') ? activeColor : inactiveColor}
         >
           <IconRanking boxSize="24px" />
           <Text fontSize="8px">랭킹</Text>
@@ -77,12 +75,10 @@ export default function BottomMenu() {
           display="flex"
           flexDirection="column"
           alignItems="center"
-          color={pathname === '/profile' ? activeColor : inactiveColor}
+          color={pathname.startsWith('/profile') ? activeColor : inactiveColor}
         >
           <IconPerson boxSize="24px" />
-          <Text fontSize="8px" color={pathname === '/profile' ? activeColor : inactiveColor}>
-            마이페이지
-          </Text>
+          <Text fontSize="8px">마이페이지</Text>
         </Link>
       </HStack>
     </Box>
