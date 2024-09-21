@@ -112,7 +112,7 @@ model Badge {
   id           Int           @id @default(autoincrement())
   name         String
   info         String
-  iconImgId    Int?
+  level        Int
   createdDate  DateTime      @default(now())
   modifiedDate DateTime      @updatedAt
   badgeHolders BadgeHolder[]
