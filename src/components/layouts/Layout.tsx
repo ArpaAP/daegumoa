@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 
+import BottomMenu from '../navbar/BottomMenu';
 import { Box } from '@chakra-ui/react';
 import { css } from '@emotion/react';
 
@@ -29,6 +30,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       position="relative"
       css={css`
         height: 100vh;
+        overflow: scroll;
 
         @supports (height: 100dvh) {
           height: 100dvh;
@@ -49,6 +51,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       `}
     >
       {children}
+      <BottomMenu></BottomMenu>
     </Box>
   );
 }
