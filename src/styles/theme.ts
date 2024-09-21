@@ -25,6 +25,12 @@ export const theme = extendTheme(
       l: '20px',
       xl: '24px',
     },
+    shadows: {
+      card: '0px 4px 30px #0D298C19',
+    },
+    radii: {
+      card: '16px',
+    },
     colors: {
       primary: {
         _default: 'var(--general-primary-color)',

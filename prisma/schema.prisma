@@ -21,7 +21,7 @@ model User {
   profileImgId Int?
   badgeId      Int?
   createdDate  DateTime @default(now())
-  modifiedDate DateTime @updatedAt
+  modifiedDate DateTime @default(now()) @updatedAt
 
   profileImg Image? @relation("ProfileImg", fields: [profileImgId], references: [id])
   badge      Badge? @relation("UserBadge", fields: [badgeId], references: [id])
@@ -34,21 +34,19 @@ model User {
 model Event {
   id             Int             @id @default(autoincrement())
   addr1          String
-  addr2          String?
-  cat            String
-  startDate      DateTime
-  endDate        DateTime
+  addr2          String
+  startDate      DateTime?
+  endDate        DateTime?
   lat            Float
   lng            Float
-  tel            String
+  tel            String?
   title          String
   tag            EventTag
   message        String?
   info           String?
   mainImg        String?
-  thumbnailImg   String?
   createdDate    DateTime        @default(now())
-  modifiedDate   DateTime        @updatedAt
+  modifiedDate   DateTime        @default(now()) @updatedAt
   eventHolders   EventHolder[]
   missionHolders MissionHolder[]
   Mission        Mission[]       @relation("MissionEvent")
@@ -65,7 +63,7 @@ model Mission {
   missionImg   String
   eventId      Int
   createdDate  DateTime   @default(now())
-  modifiedDate DateTime   @updatedAt
+  modifiedDate DateTime   @default(now()) @updatedAt
 
   events         Event           @relation("MissionEvent", fields: [eventId], references: [id])
   missionHolders MissionHolder[]
@@ -76,7 +74,7 @@ model Image {
   src            String
   alt            String
   createdDate    DateTime        @default(now())
-  modifiedDate   DateTime        @updatedAt
+  modifiedDate   DateTime        @default(now()) @updatedAt
   users          User[]          @relation("ProfileImg")
   missionHolders MissionHolder[]
 }
@@ -89,7 +87,7 @@ model MissionHolder {
   imageId      Int
   eventId      Int?
   createdDate  DateTime      @default(now())
-  modifiedDate DateTime      @updatedAt
+  modifiedDate DateTime      @default(now()) @updatedAt
 
   user    User    @relation(fields: [userId], references: [id])
   mission Mission @relation(fields: [missionId], references: [id])
@@ -102,7 +100,7 @@ model EventHolder {
   userId       Int
   eventId      Int
   createdDate  DateTime @default(now())
-  modifiedDate DateTime @updatedAt
+  modifiedDate DateTime @default(now()) @updatedAt
 
   user  User  @relation(fields: [userId], references: [id])
   event Event @relation(fields: [eventId], references: [id])
@@ -111,10 +109,10 @@ model EventHolder {
 model Badge {
   id           Int           @id @default(autoincrement())
   name         String
-  info         String
-  iconImgId    Int?
+  desc         String
+  level        Int
   createdDate  DateTime      @default(now())
-  modifiedDate DateTime      @updatedAt
+  modifiedDate DateTime      @default(now()) @updatedAt
   badgeHolders BadgeHolder[]
   users        User[]        @relation("UserBadge")
 }
@@ -124,7 +122,7 @@ model BadgeHolder {
   badgeId      Int
   userId       Int
   createdDate  DateTime @default(now())
-  modifiedDate DateTime @updatedAt
+  modifiedDate DateTime @default(now()) @updatedAt
 
   badge Badge @relation(fields: [badgeId], references: [id])
   user  User  @relation(fields: [userId], references: [id])
