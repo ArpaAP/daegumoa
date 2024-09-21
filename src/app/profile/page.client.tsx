@@ -2,6 +2,7 @@
 
 import QRCode from 'react-qr-code';
 
+import BottomMenu from '@/components/navbar/BottomMenu';
 import Badge from '@/components/profile/Badge';
 
 import editColoredIcon from '@/assets/icons/edit_colored.svg';
@@ -241,6 +242,7 @@ export default function ProfileContent({ user }: ProfileProps) {
           </VStack>
         </Flex>
       </Flex>
+      <BottomMenu />
     </>
   );
 }

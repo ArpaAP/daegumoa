@@ -2,7 +2,6 @@
 
 import { useEffect } from 'react';
 
-import BottomMenu from '../navbar/BottomMenu';
 import { Box } from '@chakra-ui/react';
 import { css } from '@emotion/react';
 
