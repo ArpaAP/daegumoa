@@ -43,7 +43,7 @@ model Event {
   title          String
   tag            EventTag
   message        String?
-  info           String?
+  info           String?         @db.Text
   mainImg        String?
   createdDate    DateTime        @default(now())
   modifiedDate   DateTime        @default(now()) @updatedAt
