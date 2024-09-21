@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+![로고](./src/assets/logo.svg)
+# 반짝반짝작은별 - 대구모아
 
-## Getting Started
+## 서비스 요약
 
-First, run the development server:
+서비스 명과 함께 1 ~ 2 줄의 짧은 서비스 요약
+ex) 탁구왕 - 실력별 탁구 매칭 서비스
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 주제 구분
+-	C타입 대구 지역 상권을 살리는데 도움을 주는 서비스 
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 팀원 소개
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| [![팀원1](https://avatars.githubusercontent.com/u/81242448?v=4)](https://github.com/ahapwhs0414) | [![팀원2](https://avatars.githubusercontent.com/u/56078563?v=4)](https://github.com/jamie2779) | [![팀원3](https://avatars.githubusercontent.com/u/68110047?v=4)](https://github.com/whitedev7773) | [![팀원4](https://avatars.githubusercontent.com/u/54466872?v=4)](https://github.com/ArpaAP) |
+|:-----------------------------------------:|:-----------------------------------------:|:-----------------------------------------:|:-----------------------------------------:|
+| **[권선우](https://github.com/ahapwhs0414)** | **[박재민](https://github.com/jamie2779)** | **[장기원](https://github.com/whitedev7773)** | **[황부연](https://github.com/ArpaAP)** |
+| 기획                              | 개발                            | 개발 / 디자인                 | 개발                       |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 시연 영상
+(필수) Youtube 링크
+(선택) Github Repository 페이지에서 바로 볼 수 있도록 넣어주셔도 좋습니다.
 
-## Learn More
+## 서비스 소개
+### 서비스 개요
+서비스에 대한 개요/요약을 개략적으로 작성
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 타서비스와의 차별점
+- 축제와 시장 정보 열람 가능
+- 외부에서 사용할 일이 많을테니 모바일 유저 친화적
+- 물론 웹에서도 정상적으로 동작하도록 반응형 ui
+- 미션 이라는 차별화된 기능을 통해 흥미를 불러일으키고
+- 뱃지라는 기능을 통해 사람들의 참여를 유도
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 구현 내용 및 결과물
+서비스의 실제 구현 내용과 결과물을 기재한다.
+1. 로그인 및 회원가입
+  - 구글을 통해 간편하게 가입
+2. 이벤트 목록
+3. 이벤트 정보
+  - 카카오 맵 API를 통해 지도 연동, 해당 이벤트의 위치 확인이 편리
+  - GPS를 통해 이벤트(시장, 축제) 참여 여부 인증
+4. 미션 목록
+  - 미션별 남은 시간과 장소 등을 한눈에 확인 가능
+5. 미션 세부정보
+  - 사진 업로드를 통한 미션 수행
+6. 랭킹
+8. 프로필
+   -> 획득한 뱃지 확인 및 대표 뱃지 설정 가능
+   -> 개인 통계 열람
 
-## Deploy on Vercel
+(추가예정)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 구현 방식
+Next.js를 이용해서...
+ex) 프론트엔드로는 TypeScript와 React를 사용, 백엔드로는 Java와 Spring을 사용. AWS를 통해 배포를 진행
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 향후 개선 혹은 발전 방안
+- 관리자 페이지 체계화
+- 축제나 시장측과 협의하여 상품을 줄 수 있는 미션들 진행
+- 지속적인 뱃지 및 미션 업데이트
