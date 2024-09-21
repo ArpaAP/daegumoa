@@ -1,16 +1,16 @@
 'use client';
 
-import MissionCard from '@/components/missionCard';
+import MissionCard from '@/components/display/MissionCard';
 
 import { eventTestData } from '@/constants/eventtest';
 import { missionTestData } from '@/constants/missiontest';
 
-import { Box, Button, Text, VStack, HStack } from '@chakra-ui/react';
+import { Box, Text, VStack, Tabs, Tab, TabList, TabPanel, TabPanels } from '@chakra-ui/react';
 
 export default function MissionPageContent() {
   return (
-    <Box h="100dvh" px="20px" py="30px">
-      <Box px="10px">
+    <Box h="100dvh" px={6} py={12}>
+      <Box px={3} pb={6}>
         <Text fontSize="xl" color="primary" fontWeight="Bold">
           미션
         </Text>
@@ -18,26 +18,32 @@ export default function MissionPageContent() {
           다양한 미션을 도전해봐요
         </Text>
       </Box>
-      <HStack p="10px">
-        <Button color="primary" variant="outline">
-          전체
-        </Button>
-        <Button color="gray" variant="outline">
-          시장
-        </Button>
-        <Button color="gray" variant="outline">
-          축제
-        </Button>
-        <Button color="gray" variant="outline">
-          공연/전시
-        </Button>
-        <Button color="gray" variant="outline">
-          기타
-        </Button>
-      </HStack>
-      <VStack gap="20px">
-        <MissionCard mission={{ ...missionTestData, event: eventTestData, holders: [] }} />
-      </VStack>
+
+      <Tabs variant="outlined" size="sm">
+        <TabList mb={4} px={3}>
+          <Tab>전체</Tab>
+          <Tab>시장</Tab>
+          <Tab>축제</Tab>
+          <Tab>기타</Tab>
+        </TabList>
+
+        <TabPanels>
+          <TabPanel p={0}>
+            <VStack gap="20px">
+              <MissionCard mission={{ ...missionTestData, event: eventTestData, holders: [] }} />
+            </VStack>
+          </TabPanel>
+          <TabPanel>
+            <p>two!</p>
+          </TabPanel>
+          <TabPanel>
+            <p>three!</p>
+          </TabPanel>
+          <TabPanel>
+            <p>four!</p>
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
     </Box>
   );
 }

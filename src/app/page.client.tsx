@@ -32,6 +32,7 @@ export default function HomePage() {
                 <Tab>전체</Tab>
                 <Tab>시장</Tab>
                 <Tab>축제</Tab>
+                <Tab>기타</Tab>
               </TabList>
 
               <TabPanels>
@@ -50,6 +51,9 @@ export default function HomePage() {
                 </TabPanel>
                 <TabPanel>
                   <p>three!</p>
+                </TabPanel>
+                <TabPanel>
+                  <p>four!</p>
                 </TabPanel>
               </TabPanels>
             </Tabs>

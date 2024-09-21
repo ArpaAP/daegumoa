@@ -123,9 +123,9 @@ const MissionCard: React.FC<MissionCardProps> = ({ mission }) => {
         </CardHeader>
         <CardBody>
           <VStack>
-            <HStack justifyContent="space-between" w="full" borderBottom="1px" borderColor="gray.200" pb={2}>
+            <HStack justifyContent="space-between" w="full" pb={2}>
               <HStack gap="4px">
-                <Tag fontSize="m" fontWeight="light" bg="secondary" color="white" rounded="5">
+                <Tag fontSize="xs" fontWeight="light" bg="secondary" color="white" rounded="5">
                   {mission.tag === 'MARKET'
                     ? '시장'
                     : mission.tag === 'FESTIVAL'
@@ -134,27 +134,27 @@ const MissionCard: React.FC<MissionCardProps> = ({ mission }) => {
                         ? '공연/전시'
                         : '기타'}
                 </Tag>
-                <Tag fontSize="m" fontWeight="light" bg="primary" color="white">
+                <Tag fontSize="xs" fontWeight="light" bg="primary" color="white">
                   진행중
                 </Tag>
-                <Tag fontSize="m" fontWeight="light" variant="outline" color="primary">
+                <Tag fontSize="xs" fontWeight="light" variant="outline" color="primary">
                   {mission.difficulty === 'EASY' ? '쉬움' : mission.difficulty === 'NORMAL' ? '보통' : '어려움'}
                 </Tag>
               </HStack>
               <Tag bg="black" color="white" rounded="20px" px="10px" py="5px">
                 <TagLeftIcon boxSize="16px" as={Image} src={checkIcon} alt="" />
-                <TagLabel fontSize="m">
+                <TagLabel fontSize="xs">
                   참여자 {mission.holders.filter((holders) => holders.status === 'COMPLETE').length}명
                 </TagLabel>
               </Tag>
             </HStack>
           </VStack>
-          <Text fontWeight="bold" color="black" fontSize="xl">
+          <Text fontWeight="bold" color="black" fontSize="m" pb={2}>
             {mission.title}
           </Text>
-          <HStack>
+          <HStack align="center">
             <Image src={message.includes('일') ? clockSuccess : clockDanger} alt="" boxSize="16px" p="0" />
-            <Text fontWeight="bold" color={message.includes('일') ? 'success' : 'danger'} fontSize="l">
+            <Text fontWeight="bold" color={message.includes('일') ? 'success' : 'danger'} fontSize="xs">
               {message}
             </Text>
           </HStack>
