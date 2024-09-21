@@ -89,7 +89,7 @@ export default function ProfileContent({ user }: ProfileProps) {
       </Modal>
 
       {/* 전체 콘텐츠 */}
-      <Flex direction="column" gap="20px" p="20px" boxSizing="border-box">
+      <Flex direction="column" gap="20px" p="20px 20px 90px 20px" boxSizing="border-box">
         {/* 프로필 기본 정보 (이미지/이름/메인 뱃지) */}
         <Flex p="40px 20px 0px 20px" gap="16px" boxSizing="border-box">
           <Image
