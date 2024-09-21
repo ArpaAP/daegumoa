@@ -1,5 +1,6 @@
 'use client';
 
+import EventCard from '@/components/display/EventCard';
 import BottomMenu from '@/components/navbar/BottomMenu';
 
 import banner from '@/assets/banner.png';
@@ -23,18 +24,27 @@ export default function HomePage() {
         </Box>
 
         <Card>
-          <CardBody as={VStack} gap={2} align="left">
+          <CardBody as={VStack} gap={4} align="left">
             <Input placeholder="검색" borderRadius="10px" />
 
             <Tabs variant="outlined" size="sm">
-              <TabList my={2}>
+              <TabList mb={4}>
                 <Tab>전체</Tab>
                 <Tab>시장</Tab>
                 <Tab>축제</Tab>
               </TabList>
 
               <TabPanels>
-                <TabPanel p={0}>asdf</TabPanel>
+                <TabPanel p={0}>
+                  <EventCard
+                    title="2024 떡볶이페스티벌"
+                    startDate="5.4 (토)"
+                    endDate="5.5 (일)"
+                    location="고성동 3가"
+                    tel="031-0000-0000"
+                    imageUrl="https://picsum.photos/200/200"
+                  />
+                </TabPanel>
                 <TabPanel>
                   <p>two!</p>
                 </TabPanel>
