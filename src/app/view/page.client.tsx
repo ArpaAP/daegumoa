@@ -1,52 +1,34 @@
 'use client';
 
-import QRCode from 'react-qr-code';
-
-import BottomMenu from '@/components/navbar/BottomMenu';
 import Badge from '@/components/profile/Badge';
 
-import editColoredIcon from '@/assets/icons/edit_colored.svg';
-import linkIcon from '@/assets/icons/link.svg';
-import logoWithText from '@/assets/icons/logo_with_text.svg';
 import mainRankIcon from '@/assets/icons/main_rank.svg';
 import rankIcon from '@/assets/icons/rank.svg';
 import starFilledIcon from '@/assets/icons/star_filled.svg';
-import uploadIcon from '@/assets/icons/upload.svg';
+import verifiedIcon from '@/assets/icons/verified.svg';
 
-import { Image, Link } from '@chakra-ui/next-js';
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  Card,
-  Flex,
-  HStack,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalOverlay,
-  Text,
-  useDisclosure,
-  VStack,
-} from '@chakra-ui/react';
-import { User } from '@prisma/client';
-import { useRouter } from 'next/navigation';
+import { Image } from '@chakra-ui/next-js';
+import { Box, Card, Flex, HStack, Text, VStack } from '@chakra-ui/react';
+import { useSearchParams } from 'next/navigation';
+import { redirect } from 'next/navigation';
 
-type NewUser = User & { profileImg: string };
+export default function ProfileViewPage() {
+  const params = useSearchParams();
+  const user_id = params.get('user');
 
-interface ProfileProps {
-  user?: NewUser | null;
-}
-
-export default function ProfileContent({ user }: ProfileProps) {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const router = useRouter();
-
-  // 유저가 없으면 다른 화면 보여주기
-  if (!user) {
-    return <></>;
-  }
+  // 나중에 백엔드에서 user 불러오세유
+  const user = {
+    id: 23,
+    email: 'w.developer7773@gmail.com',
+    name: '장기원',
+    nickname: 'w.developer7773',
+    profileImgId: null,
+    badgeId: 4,
+    createdDate: Date.now(),
+    modifiedDate: Date.now(),
+    // 기존 User필드에 profileImg추가
+    profileImg: 'https://github.com/whitedev7773.png',
+  };
 
   const badge_list = [
     { level: 1, name: '초보 탐험가', desc: '시장을 1개 방문하세요.' },
@@ -64,77 +46,35 @@ export default function ProfileContent({ user }: ProfileProps) {
     { level: 4, name: '똑똑한 리스너', desc: '강의를 10개 청강하세요.' },
   ];
 
+  if (!user_id) {
+    return redirect('/');
+  }
+
   return (
     <>
-      {/* 프로필 공유 모달 */}
-      <Modal isOpen={isOpen} onClose={onClose} motionPreset="slideInTop">
-        <ModalOverlay />
-        <ModalContent mt={[0, 50]} padding="20px" borderRadius="0px 0px 20px 20px">
-          <ModalCloseButton />
-          <ModalBody padding="30px 0px 0px 0px" justifyContent="center">
-            <Text fontSize="m" fontWeight="bold" textAlign="center">
-              {user.nickname}님의 프로필
-            </Text>
-            <VStack mt="20px">
-              <HStack spacing="20px" margin="20px 0px">
-                <Image src={logoWithText} alt="대구모아 로고" />
-                <QRCode size={110} value={` https://daegumoa.arpaap.dev/view/${user.nickname}`} />
-              </HStack>
-              <HStack>
-                <Image src={linkIcon} alt="링크 아이콘" />
-                <Link href={`/view?user=${user.nickname}`} fontSize="xs" fontWeight="regular" color="primary">
-                  https://daegumoa.arpaap.dev
-                </Link>
-              </HStack>
-            </VStack>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
-
       {/* 전체 콘텐츠 */}
       <Flex direction="column" gap="20px" p="20px 20px 90px 20px" boxSizing="border-box">
         {/* 프로필 기본 정보 (이미지/이름/메인 뱃지) */}
-        <Flex p="40px 20px 0px 20px" gap="16px" boxSizing="border-box">
-          <Image
-            width="72"
-            height="72"
-            boxSize="72px"
-            borderRadius="full"
-            src={user.profileImg}
-            alt={`${user.nickname}님의 프로필 이미지`}
-            priority
-          />
-          <div>
-            <Badge info={badge_list[4]} />
-            <Text fontSize="xl" fontWeight="bold" color="primary.shade4">
-              {user.name}님
-            </Text>
-          </div>
-        </Flex>
-        {/* 프로필 수정/공유 */}
-        <ButtonGroup padding="0px 20px" width="100%" boxSizing="border-box">
-          <Button
-            width="100%"
-            leftIcon={<Image boxSize="20px" src={editColoredIcon} alt="프로필 수정" />}
-            textColor="primary"
-            borderColor="primary"
-            variant="outline"
-            fontSize="s"
-            fontWeight="regular"
-            onClick={() => router.push('/profile/edit')}
-          >
-            프로필 수정
-          </Button>
-          <Button
-            leftIcon={<Image boxSize="18px" src={uploadIcon} alt="프로필 공유" />}
-            width="100%"
-            fontSize="s"
-            fontWeight="400"
-            onClick={onOpen}
-          >
-            프로필 공유
-          </Button>
-        </ButtonGroup>
+        <VStack p="20px 0px" gap="16px" boxSizing="border-box" boxShadow="card" bgColor="white" borderRadius="card">
+          <Flex justifyContent="center" alignItems="center" gap="16px">
+            <Image
+              width="72"
+              height="72"
+              boxSize="72px"
+              borderRadius="full"
+              src={user.profileImg}
+              alt={`${user.nickname}님의 프로필 이미지`}
+              priority
+            />
+            <Flex flexDirection="column" justifyContent="center" alignItems="center">
+              <Badge info={badge_list[4]} />
+              <Text fontSize="xl" fontWeight="bold" color="primary.shade4">
+                {user.name}
+              </Text>
+            </Flex>
+          </Flex>
+          <Image w="65px" h="16px" margin="auto" src={verifiedIcon} alt="대구모아 인증" />
+        </VStack>
         {/* 수집한 뱃지 모음 */}
         <Flex
           direction="column"
@@ -245,7 +185,6 @@ export default function ProfileContent({ user }: ProfileProps) {
           </VStack>
         </Flex>
       </Flex>
-      <BottomMenu />
     </>
   );
 }
