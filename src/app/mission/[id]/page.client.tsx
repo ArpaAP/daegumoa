@@ -94,7 +94,7 @@ export default function MissionPageContent({ mission }: MissionDetailProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Box h="100dvh" px="20px" py="30px" w="full" position="relative">
+    <Box h="100dvh" px="20px" py="30px" w="full">
       <Link href="/mission" _hover={{ textDecoration: 'none' }}>
         <HStack px="10px" py="20px">
           <Image src={prevIcon} alt="" boxSize="16px" />
@@ -103,7 +103,7 @@ export default function MissionPageContent({ mission }: MissionDetailProps) {
           </Text>
         </HStack>
       </Link>
-      <VStack gap="20px">
+      <VStack gap="20px" pb="150px">
         <Box
           position="relative"
           w="100%"
@@ -197,17 +197,18 @@ export default function MissionPageContent({ mission }: MissionDetailProps) {
         </Card>
       </VStack>
       <Button
-        position="absolute"
+        position="fixed"
         bottom="80px"
+        w="calc(100vw - 40px)"
         h="50px"
-        left="0"
-        right="0"
-        marginX="20px"
+        left="50vw"
+        transform="translateX(-50%)"
         rounded="8px"
         colorScheme="primary"
         boxShadow="lg"
         zIndex="1000"
         gap="5px"
+        maxW="560px"
         onClick={onOpen}
       >
         <Image src={uploadIcon} alt=""></Image>
