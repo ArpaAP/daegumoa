@@ -56,7 +56,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           {children}
         </CSSTransition>
       </TransitionGroup>
-      {!noNav.includes(pathname) && <BottomMenu />}
+      {!noNav.includes(pathname) && <BottomMenu pathname={pathname} />}
     </Box>
   );
 }
