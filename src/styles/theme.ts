@@ -1,5 +1,5 @@
 import { Paperlogy } from './font';
-import { defineStyleConfig, extendTheme, StyleFunctionProps, withDefaultColorScheme } from '@chakra-ui/react';
+import { border, defineStyleConfig, extendTheme, StyleFunctionProps, withDefaultColorScheme } from '@chakra-ui/react';
 
 export const theme = extendTheme(
   {
@@ -99,17 +99,75 @@ export const theme = extendTheme(
           outline: {
             field: {
               borderColor: 'grey',
+              color: 'black',
               _hover: {
                 borderColor: 'grey',
               },
               _focusVisible: {
                 borderColor: 'primary',
               },
+              _placeholder: {
+                color: 'grey',
+              },
             },
           },
         },
         defaultProps: {
           variant: 'outline',
+        },
+      },
+      Card: {
+        baseStyle: {
+          container: {
+            bg: 'white',
+            shadow: '0 4px 30px 0 rgba(0, 0, 0, 8%)',
+            color: 'black',
+          },
+        },
+        sizes: {
+          md: {
+            container: {
+              borderRadius: '16px',
+            },
+          },
+        },
+        variants: {
+          elevated: {
+            container: {
+              bg: 'white',
+              shadow: '0 4px 30px 0 rgba(0, 0, 0, 8%)',
+            },
+          },
+        },
+      },
+      Tabs: {
+        baseStyle: {
+          tablist: {
+            gap: 2,
+          },
+        },
+        sizes: {
+          sm: {
+            tab: {
+              fontSize: 'xs',
+            },
+          },
+        },
+        variants: {
+          outlined: {
+            tab: {
+              px: '10px',
+              h: '30px',
+              borderWidth: '1px',
+              borderColor: 'grey',
+              borderRadius: '8px',
+              color: 'grey',
+              _selected: {
+                color: 'primary',
+                borderColor: 'primary',
+              },
+            },
+          },
         },
       },
     },
