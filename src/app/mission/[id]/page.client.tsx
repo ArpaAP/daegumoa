@@ -12,7 +12,7 @@ import prevIcon from '@/assets/icons/prev.svg';
 import starIcon from '@/assets/icons/star_primary.svg';
 import uploadIcon from '@/assets/icons/upload.svg';
 
-import { Image } from '@chakra-ui/next-js';
+import { Image, Link } from '@chakra-ui/next-js';
 import {
   Box,
   Text,
@@ -23,7 +23,6 @@ import {
   TagLeftIcon,
   TagLabel,
   Card,
-  Link,
   CardBody,
   useDisclosure,
   Modal,
