@@ -111,7 +111,7 @@ model EventHolder {
 model Badge {
   id           Int           @id @default(autoincrement())
   name         String
-  info         String
+  desc         String
   level        Int
   createdDate  DateTime      @default(now())
   modifiedDate DateTime      @updatedAt
