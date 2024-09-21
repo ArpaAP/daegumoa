@@ -1,4 +1,6 @@
-import type { Metadata } from 'next';
+import { Toaster } from 'react-hot-toast';
+
+import type { Metadata, Viewport } from 'next';
 
 import { Layout } from '@/components/layouts';
 
@@ -6,6 +8,12 @@ import { Paperlogy } from '@/styles/font';
 import '@/styles/globals.css';
 
 import Providers from '@/providers';
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+};
 
 export const metadata: Metadata = {
   title: '대구모아',
@@ -21,6 +29,7 @@ export default function RootLayout({
     <html lang="ko" className={Paperlogy.variable}>
       <body>
         <Providers>
+          <Toaster position="top-center" reverseOrder={false} />
           <Layout>{children}</Layout>
         </Providers>
       </body>

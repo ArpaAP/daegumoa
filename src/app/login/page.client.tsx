@@ -5,6 +5,7 @@ import logo from '@/assets/logo.svg';
 
 import { Image } from '@chakra-ui/next-js';
 import { Box, Button, Text, VStack } from '@chakra-ui/react';
+import { signIn } from 'next-auth/react';
 
 export default function LoginPageContent() {
   return (
@@ -25,7 +26,14 @@ export default function LoginPageContent() {
             <Text fontSize="s" color="secondary">
               서비스 이용을 위해 로그인해주세요.
             </Text>
-            <Button w="full" bg="white" rounded="full" shadow="0 0 30px 0 rgb(0 0 0 / 8%);" py={6}>
+            <Button
+              w="full"
+              bg="white"
+              rounded="full"
+              shadow="0 0 30px 0 rgb(0 0 0 / 8%);"
+              py={6}
+              onClick={() => signIn('google')}
+            >
               <Image src={google} alt="google" w={6} h={6} mr={2} />
               <Text fontSize="xs" fontWeight="regular" color="black">
                 Google로 로그인

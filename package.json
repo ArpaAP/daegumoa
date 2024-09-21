@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "postinstall": "prisma generate",
     "format": "prettier --write ./src",
     "generate": "prisma generate",
     "db:push": "prisma db push"
@@ -19,10 +20,14 @@
     "@prisma/client": "^5.19.1",
     "dayjs": "^1.11.13",
     "framer-motion": "^11.5.4",
+    "ky": "^1.7.2",
     "next": "14.2.11",
     "next-auth": "5.0.0-beta.21",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-hook-form": "^7.53.0",
+    "react-hot-toast": "^2.4.1",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
