@@ -10,20 +10,8 @@ import clockDanger from '@/assets/icons/clock_danger.svg';
 import clockSuccess from '@/assets/icons/clock_success.svg';
 import positionIcon from '@/assets/icons/position.svg';
 
-import { Image } from '@chakra-ui/next-js';
-import {
-  Box,
-  Card,
-  CardHeader,
-  CardBody,
-  VStack,
-  HStack,
-  Tag,
-  TagLeftIcon,
-  TagLabel,
-  Text,
-  Link,
-} from '@chakra-ui/react';
+import { Image, Link } from '@chakra-ui/next-js';
+import { Box, Card, CardHeader, CardBody, VStack, HStack, Tag, TagLeftIcon, TagLabel, Text } from '@chakra-ui/react';
 import { Mission, Event, MissionHolder } from '@prisma/client';
 import duration from 'dayjs/plugin/duration';
 
