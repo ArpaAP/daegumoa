@@ -1,15 +1,14 @@
 'use client';
 
-import checkbox from '@/assets/icons/checkbox.svg';
-import home from '@/assets/icons/home.svg';
-import person from '@/assets/icons/person.svg';
-import ranking from '@/assets/icons/ranking.svg';
-
-import { Image, Link } from '@chakra-ui/next-js';
+import { IconCheckbox, IconHome, IconPerson, IconRanking } from '@/icons';
+import { Link } from '@chakra-ui/next-js';
 import { Box, HStack, Text } from '@chakra-ui/react';
 import { css } from '@emotion/react';
+import { usePathname } from 'next/navigation';
 
-export default function BottomMenu({ pathname }: { pathname: string }) {
+export default function BottomMenu() {
+  const pathname = usePathname();
+
   // 활성화된 메뉴의 색상
   const activeColor = 'primary';
   const inactiveColor = 'grey';
@@ -37,58 +36,50 @@ export default function BottomMenu({ pathname }: { pathname: string }) {
       `}
     >
       <HStack h="full" px={10} justify="space-between" align="center">
-        <Link href="/" variant="ghost" display="flex" flexDirection="column" alignItems="center">
-          <Image
-            alt="Home"
-            src={home}
-            width={24}
-            height={24}
-            w="24px"
-            h="24px"
-            color={pathname === '/' ? activeColor : inactiveColor} // 현재 페이지 체크
-          />
+        <Link
+          href="/"
+          variant="ghost"
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          color={pathname === '/' ? activeColor : inactiveColor}
+        >
+          <IconHome boxSize="24px" />
           <Text fontSize="8px" color={pathname === '/' ? activeColor : inactiveColor}>
             홈
           </Text>
         </Link>
-        <Link href="/mission" variant="ghost" display="flex" flexDirection="column" alignItems="center">
-          <Image
-            alt="Mission"
-            src={checkbox}
-            width={24}
-            height={24}
-            w="24px"
-            h="24px"
-            color={pathname === '/mission' ? activeColor : inactiveColor}
-          />
-          <Text fontSize="8px" color={pathname === '/mission' ? activeColor : inactiveColor}>
-            미션
-          </Text>
+        <Link
+          href="/mission"
+          variant="ghost"
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          color={pathname === '/mission' ? activeColor : inactiveColor}
+        >
+          <IconCheckbox boxSize="24px" />
+          <Text fontSize="8px">미션</Text>
         </Link>
-        <Link href="/ranking" variant="ghost" display="flex" flexDirection="column" alignItems="center">
-          <Image
-            alt="Ranking"
-            src={ranking}
-            width={24}
-            height={24}
-            w="24px"
-            h="24px"
-            color={pathname === '/ranking' ? activeColor : inactiveColor}
-          />
-          <Text fontSize="8px" color={pathname === '/ranking' ? activeColor : inactiveColor}>
-            랭킹
-          </Text>
+        <Link
+          href="/ranking"
+          variant="ghost"
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          color={pathname === '/ranking' ? activeColor : inactiveColor}
+        >
+          <IconRanking boxSize="24px" />
+          <Text fontSize="8px">랭킹</Text>
         </Link>
-        <Link href="/profile" variant="ghost" display="flex" flexDirection="column" alignItems="center">
-          <Image
-            alt="Profile"
-            src={person}
-            width={24}
-            height={24}
-            w="24px"
-            h="24px"
-            color={pathname === '/profile' ? activeColor : inactiveColor}
-          />
+        <Link
+          href="/profile"
+          variant="ghost"
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          color={pathname === '/profile' ? activeColor : inactiveColor}
+        >
+          <IconPerson boxSize="24px" />
           <Text fontSize="8px" color={pathname === '/profile' ? activeColor : inactiveColor}>
             마이페이지
           </Text>
