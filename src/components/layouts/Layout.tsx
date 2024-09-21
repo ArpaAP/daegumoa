@@ -26,6 +26,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       bg="var(--background)"
       borderWidth={1}
       borderColor="gray.200"
+      position="relative"
       css={css`
         height: 100vh;
 
