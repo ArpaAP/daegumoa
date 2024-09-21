@@ -56,7 +56,6 @@ export default function HomePage() {
           </CardBody>
         </Card>
       </VStack>
-      <BottomMenu />
     </>
   );
 }

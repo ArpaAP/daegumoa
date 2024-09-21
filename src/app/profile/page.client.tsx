@@ -2,7 +2,6 @@
 
 import QRCode from 'react-qr-code';
 
-import BottomMenu from '@/components/navbar/BottomMenu';
 import Badge from '@/components/profile/Badge';
 
 import editColoredIcon from '@/assets/icons/edit_colored.svg';
@@ -69,7 +68,7 @@ export default function ProfileContent({ user }: ProfileProps) {
       {/* 프로필 공유 모달 */}
       <Modal isOpen={isOpen} onClose={onClose} motionPreset="slideInTop">
         <ModalOverlay />
-        <ModalContent mt={[0, 50]} padding="20px" borderRadius="0px 0px 20px 20px">
+        <ModalContent mt="0" padding="20px" borderRadius="0px 0px 20px 20px">
           <ModalCloseButton />
           <ModalBody padding="30px 0px 0px 0px" justifyContent="center">
             <Text fontSize="m" fontWeight="bold" textAlign="center">
@@ -245,7 +244,6 @@ export default function ProfileContent({ user }: ProfileProps) {
           </VStack>
         </Flex>
       </Flex>
-      <BottomMenu />
     </>
   );
 }
