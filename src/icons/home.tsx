@@ -16,12 +16,12 @@ export const IconHome = createIcon({
         fill="currentColor"
         mask="url(#path-1-inside-1_38_98)"
       />
-      <path d="M5.5 17V12" stroke="currentColor" stroke-linecap="round" />
-      <path d="M18.5 17V12" stroke="currentColor" stroke-linecap="round" />
+      <path d="M5.5 17V12" stroke="currentColor" strokeLinecap="round" />
+      <path d="M18.5 17V12" stroke="currentColor" strokeLinecap="round" />
       <path
         d="M2.5 11.5L10.5858 3.41421C11.3668 2.63316 12.6332 2.63316 13.4142 3.41421L21.5 11.5"
         stroke="currentColor"
-        stroke-linecap="round"
+        strokeLinecap="round"
       />
       <rect x="9.5" y="15.5" width="5" height="6" rx="0.5" stroke="currentColor" />
     </>
