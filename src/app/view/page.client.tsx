@@ -9,13 +9,12 @@ import verifiedIcon from '@/assets/icons/verified.svg';
 
 import { Image } from '@chakra-ui/next-js';
 import { Box, Card, Flex, HStack, Text, VStack } from '@chakra-ui/react';
-import { useSearchParams } from 'next/navigation';
-import { redirect } from 'next/navigation';
 
-export default function ProfileViewPage() {
-  const params = useSearchParams();
-  const user_id = params.get('user');
+interface ProfileViewPageProps {
+  userId: string;
+}
 
+export default function ProfileViewPage({ userId }: ProfileViewPageProps) {
   // 나중에 백엔드에서 user 불러오세유
   const user = {
     id: 23,
@@ -45,10 +44,6 @@ export default function ProfileViewPage() {
     { level: 3, name: '손을 든 리스너', desc: '강의를 5개 청강하세요.' },
     { level: 4, name: '똑똑한 리스너', desc: '강의를 10개 청강하세요.' },
   ];
-
-  if (!user_id) {
-    return redirect('/');
-  }
 
   return (
     <>
