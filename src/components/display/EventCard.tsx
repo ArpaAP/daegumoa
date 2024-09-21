@@ -2,8 +2,7 @@
 
 import positionIcon from '@/assets/icons/person.svg';
 
-import { IconPhone } from '@/icons/phone';
-import { IconPosition } from '@/icons/position';
+import { IconPhone, IconPosition } from '@/icons';
 import { Image } from '@chakra-ui/next-js';
 import { HStack, Text, VStack } from '@chakra-ui/react';
 
