@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import QRCode from 'react-qr-code';
 
 import BottomMenu from '@/components/navbar/BottomMenu';
@@ -15,6 +16,7 @@ import rankIcon from '@/assets/icons/rank.svg';
 import starFilledIcon from '@/assets/icons/star_filled.svg';
 import uploadIcon from '@/assets/icons/upload.svg';
 
+import { IconLogout } from '@/icons';
 import { Image, Link } from '@chakra-ui/next-js';
 import {
   Box,
@@ -34,6 +36,7 @@ import {
   Tooltip,
 } from '@chakra-ui/react';
 import { User, Badge as prismaBadge, BadgeHolder, EventHolder, MissionHolder, Event } from '@prisma/client';
+import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
 // BadgeHolder에 관련된 Badge 포함
@@ -112,24 +115,43 @@ export default function ProfileContent({ user, profileImg, viewerId }: ProfilePr
 
       {/* 전체 콘텐츠 */}
       <Flex direction="column" gap="20px" p="20px 20px 90px 20px" boxSizing="border-box">
-        {/* 프로필 기본 정보 (이미지/이름/메인 뱃지) */}
-        <Flex p="40px 20px 0px 20px" gap="16px" boxSizing="border-box">
-          <Image
-            width="72"
-            height="72"
-            boxSize="72px"
-            borderRadius="full"
-            src={profileImg || personIcon}
-            alt={`${user.nickname}님의 프로필 이미지`}
-            priority
-          />
-          <div>
-            {user.badge ? <Badge info={user.badge} /> : <Box h="28px"></Box>}
-            <Text fontSize="xl" fontWeight="bold" color="primary.shade4">
-              {user.name}님
-            </Text>
-          </div>
-        </Flex>
+        <Box>
+          <Flex justify="end">
+            <Button
+              variant="ghost"
+              color="danger"
+              size="sm"
+              onClick={() => {
+                toast.promise(signOut(), {
+                  loading: '로그아웃 중...',
+                  success: '로그아웃 되었습니다.',
+                  error: '로그아웃 중에 오류가 발생했습니다.',
+                });
+              }}
+            >
+              <IconLogout boxSize="24px" />
+              <Text fontSize="xs">로그아웃</Text>
+            </Button>
+          </Flex>
+          {/* 프로필 기본 정보 (이미지/이름/메인 뱃지) */}
+          <Flex p="0 20px 0px 20px" gap="16px" boxSizing="border-box">
+            <Image
+              width="72"
+              height="72"
+              boxSize="72px"
+              borderRadius="full"
+              src={profileImg || personIcon}
+              alt={`${user.nickname}님의 프로필 이미지`}
+              priority
+            />
+            <div>
+              {user.badge ? <Badge info={user.badge} /> : <Box h="28px"></Box>}
+              <Text fontSize="xl" fontWeight="bold" color="primary.shade4">
+                {user.name}님
+              </Text>
+            </div>
+          </Flex>
+        </Box>
         {/* 프로필 수정/공유 */}
         <ButtonGroup padding="0px 20px" width="100%" boxSizing="border-box">
           {

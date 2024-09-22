@@ -4,3 +4,4 @@ export * from './person';
 export * from './ranking';
 export * from './position';
 export * from './phone';
+export * from './logout';
