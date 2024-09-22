@@ -7,84 +7,66 @@ import ky from 'ky';
 
 import Badge from '@/components/profile/Badge';
 
+import personIcon from '@/assets/icons/person.svg';
 import prevIcon from '@/assets/icons/prev.svg';
 
 import { Image, Link } from '@chakra-ui/next-js';
 import { Button, Flex, FormControl, FormLabel, HStack, Input, Select, Text, VStack } from '@chakra-ui/react';
+import { User, Badge as prismaBadge } from '@prisma/client';
+import { useRouter } from 'next/navigation';
+
+type newUser = User & { badge: prismaBadge | null };
 
 export interface ProfileEditFormState {
   nickname: string;
-  representBadge: string;
-  representRanking: string;
+  badgeId: number | null;
+  // representRanking: string;
 }
 
-export default function ProfileEditContent() {
+interface ProfileEditContentProps {
+  user: newUser;
+  badge_list: prismaBadge[];
+}
+
+export default function ProfileEditContent({ user, badge_list }: ProfileEditContentProps) {
   const { register, handleSubmit } = useForm<ProfileEditFormState>();
 
-  // 나중에 백엔드에서 user 불러오세유
-  const user = {
-    id: 23,
-    email: 'w.developer7773@gmail.com',
-    name: '장기원',
-    nickname: 'w.developer7773',
-    profileImgId: null,
-    badgeId: 4,
-    createdDate: Date.now(),
-    modifiedDate: Date.now(),
-    // 기존 User필드에 profileImg추가
-    profileImg: 'https://github.com/whitedev7773.png',
-  };
-
-  const badge_list = [
-    { level: 1, name: '초보 탐험가', desc: '시장을 1개 방문하세요.' },
-    { level: 2, name: '중수 탐험가', desc: '시장을 3개 방문하세요.' },
-    { level: 3, name: '전문적인 탐험가', desc: '시장을 5개 방문하세요.' },
-    { level: 4, name: '위대한 탐험가', desc: '시장을 10개 방문하세요.' },
-    { level: 5, name: '맛집헌터', desc: '시장 속 숨은 맛집을 찾으세요.' },
-    { level: 5, name: '마라톤 완주', desc: '마라톤을 1회 완주하세요.' },
-    { level: 1, name: '소심한 방문객', desc: '행사에 1회 참가하세요.' },
-    { level: 2, name: '익숙한 방문객', desc: '행사제 3회 참가하세요.' },
-    { level: 5, name: '치맥 사랑꾼', desc: '치맥 페스티벌에 참가하세요.' },
-    { level: 1, name: '피곤한 리스너', desc: '강의를 1개 청강하세요.' },
-    { level: 2, name: '궁금한 리스너', desc: '강의를 3개 청강하세요.' },
-    { level: 3, name: '손을 든 리스너', desc: '강의를 5개 청강하세요.' },
-    { level: 4, name: '똑똑한 리스너', desc: '강의를 10개 청강하세요.' },
-  ];
+  const router = useRouter();
 
   const submit: SubmitHandler<ProfileEditFormState> = (data) => {
-    // toast
-    //   .promise(
-    //     ky.post('/api/users', {
-    //       json: data,
-    //     }),
-    //     {
-    //       loading: '회원가입 처리 중입니다...',
-    //       success: '성공적으로 회원가입 처리되었습니다!',
-    //       error: '회원가입 처리 중 문제가 발생했습니다.',
-    //     },
-    //   )
-    //   .then(() => {
-    //     setTimeout(() => {
-    //       router.push('/');
-    //     }, 1000);
-    //   });
+    toast
+      .promise(
+        ky.post('/api/profileEdit', {
+          json: data,
+        }),
+        {
+          loading: '수정 중입니다...',
+          success: '성공적으로 수정 되었습니다!',
+          error: '정보 수정 중 문제가 발생했습니다.',
+        },
+      )
+      .then(() => {
+        setTimeout(() => {
+          router.push(`/profile/${user.id}`);
+        }, 1000);
+      });
   };
 
   const error: SubmitErrorHandler<ProfileEditFormState> = (errors) => {
-    // toast.error(
-    //   `입력값을 확인해주세요: ${Object.entries(errors)
-    //     .map(([k, v]) => v.message)
-    //     .join(', ')}`,
-    //   {
-    //     id: 'formError',
-    //   },
-    // );
+    toast.error(
+      `${Object.entries(errors)
+        .map(([k, v]) => v.message)
+        .join(', ')}`,
+      {
+        id: 'formError',
+      },
+    );
   };
 
   return (
     <Flex direction="column" gap="30px" p="20px" height="100%">
       <HStack mt="20px">
-        <Link href="/profile">
+        <Link href={`/profile/${user.id}`}>
           <Image w="24px" h="24px" src={prevIcon} alt="뒤로가기" />
         </Link>
         <Text fontSize="l" fontWeight="medium" color="primary">
@@ -98,12 +80,12 @@ export default function ProfileEditContent() {
           height="72"
           boxSize="72px"
           borderRadius="full"
-          src={user.profileImg}
+          src={user.profileImg || personIcon}
           alt={`${user.nickname}님의 프로필 이미지`}
           priority
         />
         <VStack spacing="0px">
-          <Badge info={badge_list[4]} />
+          {user.badge && <Badge info={user.badge} />}
           <Text fontSize="xl" fontWeight="bold" color="primary.shade4">
             {user.name}님
           </Text>
@@ -124,31 +106,23 @@ export default function ProfileEditContent() {
             {...register('nickname', {
               required: '닉네임은 필수 입력값입니다.',
             })}
-            defaultValue={user.nickname}
+            defaultValue={user.nickname || ''}
           />
         </FormControl>
         <FormControl p="10px">
-          <FormLabel htmlFor="representBadge" fontSize="s" ml="10px" mb="5px" color="secondary">
+          <FormLabel htmlFor="BadgeId" fontSize="s" ml="10px" mb="5px" color="secondary">
             대표 뱃지
           </FormLabel>
-          <Select
-            id="representBadge"
-            m="0px"
-            p="0px"
-            borderRadius="10px"
-            fontSize="xs"
-            {...register('representBadge', {
-              required: '대표 뱃지는 필수 선택값입니다.',
-            })}
-          >
+          <Select id="BadgeId" m="0px" p="0px" borderRadius="10px" fontSize="xs" {...register('badgeId')}>
+            <option value="">미선택</option>
             {badge_list.map((badge, i) => (
-              <option key={i} value={badge.name}>
-                {badge.name}
+              <option key={i} value={badge.id}>
+                {badge.name} ({badge.level == 5 ? 'Master' : `${badge.level}레벨`})
               </option>
             ))}
           </Select>
         </FormControl>
-        <FormControl p="10px">
+        {/* <FormControl p="10px">
           <FormLabel htmlFor="representBadge" fontSize="s" ml="10px" mb="5px" color="secondary">
             대표 뱃지
           </FormLabel>
@@ -166,7 +140,7 @@ export default function ProfileEditContent() {
             <option value="축제를 즐기는 Player">축제를 즐기는 Player</option>
             <option value="강연을 즐겨 듣는 Listener">강연을 즐겨 듣는 Listener</option>
           </Select>
-        </FormControl>
+        </FormControl> */}
         <Button
           type="submit"
           position="absolute"
