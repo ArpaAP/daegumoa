@@ -80,8 +80,8 @@
 <br/>
 
 > Design: Figma
->
-> <img src="./.readme/figma.png">
+
+<img src="./.readme/figma.png">
 
 ## 향후 개선 혹은 발전 방안
 
