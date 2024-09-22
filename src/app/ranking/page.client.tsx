@@ -1,6 +1,8 @@
+'use client';
+
 import RankingCard from '@/components/display/RankingCard';
 
-import { Text, VStack } from '@chakra-ui/react';
+import { Box, Text, VStack } from '@chakra-ui/react';
 
 export default function RankingPageContent() {
   const data_1 = [
@@ -22,7 +24,7 @@ export default function RankingPageContent() {
   ];
 
   return (
-    <>
+    <Box>
       {/* 헤더 */}
       <VStack align="start" p="60px 20px 30px 30px" spacing="0">
         <Text fontSize="xl" fontWeight="bold" color="primary">
@@ -34,10 +36,10 @@ export default function RankingPageContent() {
       </VStack>
       {/* 콘텐츠 */}
       <VStack align="start" p="20px" pb="80px" spacing="30px">
-        <RankingCard name="시장을 좋아하는 Mania" data={data_1} />
-        <RankingCard name="축제를 즐기는 Player" data={data_2} />
-        <RankingCard name="강연을 즐겨 듣는 Listener" data={data_3} />
+        <RankingCard href="/ranking/market" name="시장을 좋아하는 Mania" data={data_1} />
+        <RankingCard href="/ranking/event" name="축제를 즐기는 Player" data={data_2} />
+        <RankingCard href="/ranking/lecture" name="강연을 즐겨 듣는 Listener" data={data_3} />
       </VStack>
-    </>
+    </Box>
   );
 }

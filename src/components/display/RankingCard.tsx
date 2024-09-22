@@ -1,4 +1,4 @@
-import { Avatar, Flex, Text, VStack } from '@chakra-ui/react';
+import { Avatar, Flex, Text, VStack, Link } from '@chakra-ui/react';
 
 function refineName(str: string) {
   const trimmedStr = str.substring(0, 6);
@@ -15,10 +15,11 @@ type RefinedUserInfo = {
 
 interface RankingCardProps {
   name: string;
+  href: string;
   data: RefinedUserInfo[];
 }
 
-export default function RankingCard({ name, data }: RankingCardProps) {
+export default function RankingCard({ name, href, data }: RankingCardProps) {
   // const data = [
   //   { nickname: 'W.Developer7773', badges: 6, profileImage: 'https://github.com/whitedev7773.png' },
   //   { nickname: 'ArpaAP', badges: 5, profileImage: 'https://github.com/ArpaAP.png' },
@@ -27,9 +28,18 @@ export default function RankingCard({ name, data }: RankingCardProps) {
 
   return (
     <VStack align="start" spacing="10px" w="100%">
-      <Text ml="10px" fontSize="m" fontWeight="medium">
-        {name}
-      </Text>
+      {/* 헤더 */}
+      <Flex width="100%" justifyContent="space-around" alignItems="center">
+        <Text width="100%" ml="10px" fontSize="m" fontWeight="medium">
+          {name}
+        </Text>
+        <Link href={href}>
+          <Text width="fit-content" whiteSpace="nowrap" mr="10px" fontSize="xs" fontWeight="regular" color="secondary">
+            자세히보기{' >'}
+          </Text>
+        </Link>
+      </Flex>
+      {/* 카드 보드 */}
       <Flex
         width="100%"
         justifyContent="center"
