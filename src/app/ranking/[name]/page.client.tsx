@@ -41,17 +41,17 @@ const PrevIcon = createIcon({
 
 export default function DetailedRankingPageContent({ route }: { route: string }) {
   const data = [
-    { nickname: 'W.Developer7773', badges: 6, profileImage: 'https://github.com/whitedev7773.png' },
-    { nickname: 'ArpaAP', badges: 5, profileImage: 'https://github.com/ArpaAP.png' },
-    { nickname: 'Jamie2779', badges: 3, profileImage: 'https://github.com/jamie2779.png' },
-    { nickname: 'Ahapwhs0414', badges: 2, profileImage: 'https://github.com/ahapwhs0414' },
-    { nickname: 'Ahapwhs0414', badges: 2, profileImage: 'https://github.com/ahapwhs0414' },
-    { nickname: 'Ahapwhs0414', badges: 2, profileImage: 'https://github.com/ahapwhs0414' },
-    { nickname: 'Ahapwhs0414', badges: 2, profileImage: 'https://github.com/ahapwhs0414' },
-    { nickname: 'Ahapwhs0414', badges: 2, profileImage: 'https://github.com/ahapwhs0414' },
-    { nickname: 'Ahapwhs0414', badges: 2, profileImage: 'https://github.com/ahapwhs0414' },
-    { nickname: 'Ahapwhs0414', badges: 2, profileImage: 'https://github.com/ahapwhs0414' },
-    { nickname: 'Ahapwhs0414', badges: 2, profileImage: 'https://github.com/ahapwhs0414' },
+    { nickname: 'W.Developer7773', badges: 17, profileImage: 'https://github.com/whitedev7773.png' },
+    { nickname: 'ArpaAP', badges: 15, profileImage: 'https://github.com/ArpaAP.png' },
+    { nickname: 'Jamie2779', badges: 12, profileImage: 'https://github.com/jamie2779.png' },
+    { nickname: 'Ahapwhs0414', badges: 10, profileImage: 'https://github.com/ahapwhs0414' },
+    { nickname: 'SkyVenture', badges: 9, profileImage: 'https://github.com/ahapwhs0414' },
+    { nickname: 'PixelBound', badges: 7, profileImage: 'https://github.com/ahapwhs0414' },
+    { nickname: 'EchoShade', badges: 6, profileImage: 'https://github.com/ahapwhs0414' },
+    { nickname: 'StellarCraft', badges: 5, profileImage: 'https://github.com/ahapwhs0414' },
+    { nickname: 'AeroVibe', badges: 4, profileImage: 'https://github.com/ahapwhs0414' },
+    { nickname: 'LunarTide', badges: 3, profileImage: 'https://github.com/ahapwhs0414' },
+    { nickname: 'BlazeHorizon', badges: 1, profileImage: 'https://github.com/ahapwhs0414' },
   ];
 
   return (
