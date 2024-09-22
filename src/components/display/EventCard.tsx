@@ -19,9 +19,21 @@ export default function EventCard({ id, title, startDate, endDate, location, tel
     <Link href={`/events/${id}`} prefetch _hover={{ textDecoration: 'none' }}>
       <HStack gap={3}>
         {imageUrl ? (
-          <Image src={imageUrl} alt={title} width={100} height={100} w="72px" h="72px" rounded="lg" />
+          <Image
+            src={imageUrl}
+            alt={title}
+            width={100}
+            height={100}
+            w="72px"
+            h="72px"
+            rounded="lg"
+            flexShrink={0}
+            style={{
+              objectFit: 'cover',
+            }}
+          />
         ) : (
-          <Box w="72px" h="72px" bgColor="#ccc" rounded="lg">
+          <Box w="72px" h="72px" bgColor="#ccc" rounded="lg" flexShrink={0}>
             <Text fontSize="xs" color="white" textAlign="center" pt="30px">
               이미지 없음
             </Text>
@@ -40,7 +52,7 @@ export default function EventCard({ id, title, startDate, endDate, location, tel
               {location.replace('대구광역시', '')}
             </Text>
             <IconPhone boxSize="14px" />
-            <Text fontSize="s" flexShrink={0}>
+            <Text fontSize="s" noOfLines={1}>
               {tel}
             </Text>
           </HStack>
