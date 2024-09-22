@@ -30,7 +30,15 @@ export default function RootLayout({
     <html lang="ko" className={Paperlogy.variable}>
       <body>
         <Providers>
-          <Toaster position="top-center" reverseOrder={false} />
+          <Toaster
+            position="top-center"
+            reverseOrder={false}
+            toastOptions={{
+              style: {
+                maxWidth: 'min(90%, 580px)',
+              },
+            }}
+          />
           <Layout>{children}</Layout>
         </Providers>
         <Script

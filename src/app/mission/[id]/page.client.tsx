@@ -1,7 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 
+import axios from 'axios';
 import dayjs from 'dayjs';
 
 import BottomMenu from '@/components/navbar/BottomMenu';
@@ -35,8 +38,9 @@ import {
   ModalBody,
   ModalCloseButton,
 } from '@chakra-ui/react';
-import { Mission, Event, MissionHolder } from '@prisma/client';
+import { Mission, Event, MissionHolder, Image as TImage } from '@prisma/client';
 import duration from 'dayjs/plugin/duration';
+import { useRouter } from 'next/navigation';
 
 dayjs.extend(duration);
 
@@ -46,11 +50,18 @@ interface MissionDetailProps {
   mission: MissionWithEventAndHolder;
 }
 
+interface UploadFormState {
+  missionId: number;
+  image: File;
+}
+
 const startMessage: string = '미션이 곧 시작됩니다.';
 const endMessage: string = '종료된 미션입니다';
 
 export default function MissionPageContent({ mission }: MissionDetailProps) {
   const [message, setMessage] = useState('');
+
+  const router = useRouter();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -92,7 +103,103 @@ export default function MissionPageContent({ mission }: MissionDetailProps) {
     return () => clearInterval(interval); // 컴포넌트 언마운트 시 인터벌 정리
   }, [mission.startTime, mission.endTime]);
 
+  const { register, watch, control, setValue, handleSubmit } = useForm<UploadFormState>({});
+
+  const { image } = watch();
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+
+    if (files) {
+      setValue('image', files[0]);
+    }
+  };
+
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const [isUploading, setIsUploading] = useState(false);
+  const [dragOver, setDragOver] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleDragEnter = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragOver(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragOver(false);
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragOver(false);
+
+    if (isUploading) return;
+
+    if (e.dataTransfer) {
+      const file = e.dataTransfer.files[0];
+
+      if (file) {
+        const fileName = file.name;
+        const fileNameSplit = fileName.split('.');
+        const fileExtension = fileNameSplit[fileNameSplit.length - 1];
+        if (['jpg', 'jpeg', 'png', 'gif'].includes(fileExtension)) {
+          setValue('image', file);
+        } else {
+          toast.error('이미지 파일만 업로드 가능합니다.');
+        }
+      }
+    }
+  };
+
+  const onSubmit: SubmitHandler<UploadFormState> = (data) => {
+    if (data.image === undefined) {
+      toast.error('이미지를 업로드해주세요.');
+      return;
+    }
+
+    const formData = new FormData();
+
+    formData.append('missionId', mission.id.toString());
+    formData.append('image', data.image);
+
+    toast('사진을 업로드하고 있습니다...');
+    setIsUploading(true);
+
+    axios
+      .post(`/api/mission/${mission.id}/upload`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          toast.success('사진 업로드를 완료했습니다.');
+
+          router.refresh();
+        } else {
+          toast.error('사진 업로드에 실패했습니다.');
+        }
+      })
+      .finally(() => {
+        setIsUploading(false);
+      });
+  };
+
+  const now = dayjs(); // 현재 시간
+  const start = dayjs(mission.startTime); // 이벤트 시작 시간
+  const end = dayjs(mission.endTime); // 이벤트 종료 시간
+
+  const status = now.isBefore(start) ? 'WAITING' : now.isAfter(end) ? 'END' : 'PROGRESS';
 
   return (
     <>
@@ -168,8 +275,13 @@ export default function MissionPageContent({ mission }: MissionDetailProps) {
                             ? '공연/전시'
                             : '기타'}
                     </Tag>
-                    <Tag fontSize="xs" fontWeight="light" bg="primary" color="white">
-                      진행중
+                    <Tag
+                      fontSize="xs"
+                      fontWeight="light"
+                      bg={status === 'WAITING' ? 'success' : status === 'PROGRESS' ? 'primary' : 'danger'}
+                      color="white"
+                    >
+                      {status === 'WAITING' ? '대기중' : status === 'END' ? '종료' : '진행중'}
                     </Tag>
                     <Tag fontSize="xs" fontWeight="light" variant="outline" color="primary">
                       {mission.difficulty === 'EASY' ? '쉬움' : mission.difficulty === 'NORMAL' ? '보통' : '어려움'}
@@ -177,9 +289,7 @@ export default function MissionPageContent({ mission }: MissionDetailProps) {
                   </HStack>
                   <Tag bg="black" color="white" rounded="20px" px="10px" py="5px">
                     <TagLeftIcon boxSize="16px" as={Image} src={checkIcon} alt="" />
-                    <TagLabel fontSize="xs">
-                      참여자 {mission.missionHolders.filter((holders) => holders.status === 'COMPLETE').length}명
-                    </TagLabel>
+                    <TagLabel fontSize="xs">참여자 {mission.missionHolders.length}명</TagLabel>
                   </Tag>
                 </HStack>
               </VStack>
@@ -219,15 +329,67 @@ export default function MissionPageContent({ mission }: MissionDetailProps) {
         )}
         <Modal isOpen={isOpen} onClose={onClose} isCentered>
           <ModalOverlay />
-          <ModalContent w="full" mx="20px">
+          <ModalContent as="form" onSubmit={handleSubmit(onSubmit)} w="full" mx="20px">
             <ModalHeader>사진 업로드</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-              <Text>미션을 수행한 사진을 업로드해주세요.</Text>
+              {image ? (
+                <Box>
+                  <Image
+                    src={URL.createObjectURL(image)}
+                    alt=""
+                    width={100}
+                    height={100}
+                    w="full"
+                    h="full"
+                    objectFit="cover"
+                    rounded="md"
+                  />
+                  <Text fontSize="m" fontWeight="semibold" pt={2}>
+                    {image.name}
+                  </Text>
+                </Box>
+              ) : (
+                <Button
+                  w="full"
+                  h="full"
+                  py={6}
+                  rounded="xl"
+                  display="flex"
+                  flexDirection="column"
+                  justifyContent="center"
+                  alignItems="center"
+                  bg={dragOver ? 'primary' : 'white'}
+                  color={dragOver ? 'white' : 'black'}
+                  borderColor={dragOver ? 'primary' : 'grey'}
+                  borderWidth={1}
+                  _hover={{
+                    bg: 'primary',
+                    color: 'white',
+                  }}
+                  onClick={() => {
+                    if (isUploading) return;
+                    inputRef.current?.click();
+                  }}
+                  onDragEnter={handleDragEnter}
+                  onDragLeave={handleDragLeave}
+                  onDragOver={handleDragOver}
+                  onDrop={handleDrop}
+                >
+                  <Box pointerEvents="none">
+                    <Text fontSize="m" fontWeight="semibold" pb={1}>
+                      터치하여 사진 업로드
+                    </Text>
+                    <Text fontSize="s">또는 PC의 경우 드래그 앤 드롭하여 사진 업로드</Text>
+                  </Box>
+                </Button>
+              )}
+
+              <input type="file" accept="image/*" ref={inputRef} hidden onChange={handleFileSelect} />
             </ModalBody>
 
             <ModalFooter>
-              <Button colorScheme="primary" mr={3} onClick={onClose}>
+              <Button type="submit" colorScheme="primary" mr={3} onClick={onClose}>
                 업로드
               </Button>
             </ModalFooter>

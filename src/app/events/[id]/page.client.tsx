@@ -1,15 +1,17 @@
 'use client';
 
+import toast from 'react-hot-toast';
 import { Map, MapMarker, MapTypeControl, ZoomControl } from 'react-kakao-maps-sdk';
+
+import haversineDistance from 'haversine-distance';
 
 import BottomMenu from '@/components/navbar/BottomMenu';
 
-import positionIcon from '@/assets/icons/position_primary.svg';
 import prevIcon from '@/assets/icons/prev.svg';
 
 import { IconPhone, IconPosition } from '@/icons';
 import { Image, Link } from '@chakra-ui/next-js';
-import { Box, Text, VStack, HStack, Tag, Card, CardBody } from '@chakra-ui/react';
+import { Box, Text, VStack, HStack, Tag, Card, CardBody, Button } from '@chakra-ui/react';
 import { Event } from '@prisma/client';
 
 interface EventDetailProps {
@@ -17,6 +19,37 @@ interface EventDetailProps {
 }
 
 export default function EventDetailPage({ event }: EventDetailProps) {
+  const handleLocation = () => {
+    toast.loading('위치 정보를 불러오는 중...', {
+      id: 'locationDetect',
+    });
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const distance = haversineDistance(
+          { latitude: event.lat, longitude: event.lng },
+          { latitude: position.coords.latitude, longitude: position.coords.longitude },
+        );
+
+        console.log(`거리: ${distance}m`);
+
+        if (distance < 100) {
+          toast.success('위치 인증에 성공했습니다.', {
+            id: 'locationDetect',
+          });
+        } else {
+          toast.error(`이벤트 장소 근처 100m 내에서 위치 인증해주세요.\n(현재 거리: ${distance.toFixed()}m)`, {
+            id: 'locationDetect',
+          });
+        }
+      });
+    } else {
+      toast.error('위치 정보를 불러오는데 실패했습니다.', {
+        id: 'locationDetect',
+      });
+    }
+  };
+
   return (
     <>
       <Box px={6} py={8} w="full" position="relative">
@@ -141,6 +174,34 @@ export default function EventDetailPage({ event }: EventDetailProps) {
             </CardBody>
           </Card>
         </VStack>
+
+        <Box h="60px" />
+        <Box
+          position="fixed"
+          width="100%"
+          maxWidth="600px"
+          left="50%"
+          transform="translateX(-50%)"
+          bottom="60px"
+          px="20px"
+          py="15px"
+          zIndex={99998}
+          bg="var(--background)"
+        >
+          <Button
+            w="full"
+            h="50px"
+            rounded="8px"
+            colorScheme="primary"
+            boxShadow="lg"
+            zIndex="1000"
+            gap="5px"
+            onClick={handleLocation}
+          >
+            <IconPosition />
+            <Text fontWeight="normal">위치 인증하기</Text>
+          </Button>
+        </Box>
       </Box>
 
       <BottomMenu />

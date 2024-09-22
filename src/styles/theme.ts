@@ -170,6 +170,13 @@ export const theme = extendTheme(
           },
         },
       },
+      Modal: {
+        baseStyle: {
+          dialog: {
+            bg: 'white',
+          },
+        },
+      },
     },
   },
   withDefaultColorScheme({
