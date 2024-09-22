@@ -5,8 +5,6 @@ import { useState } from 'react';
 import EventCard from '@/components/display/EventCard';
 import BottomMenu from '@/components/navbar/BottomMenu';
 
-import useDebounce from '@/hooks/useDebounce';
-
 import banner from '@/assets/banner.png';
 
 import { Image } from '@chakra-ui/next-js';
@@ -20,11 +18,7 @@ interface HomePageProps {
 export default function HomePage({ events }: HomePageProps) {
   const [search, setSearch] = useState('');
 
-  const debouncedSearch = useDebounce(search, 300);
-
-  const searchedEvents = events.filter(
-    (event: Event) => event.title.includes(debouncedSearch) || event.addr1.includes(debouncedSearch),
-  );
+  const searchedEvents = events.filter((event: Event) => event.title.includes(search) || event.addr1.includes(search));
 
   return (
     <>

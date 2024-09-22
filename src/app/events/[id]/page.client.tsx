@@ -56,9 +56,11 @@ export default function EventDetailPage({ event }: EventDetailProps) {
           <Card w="100%">
             <CardBody as={VStack} gap={4} align="left">
               <Box>
-                <Text fontWeight="medium" color="grey" fontSize="s">
-                  {event.startDate?.toLocaleString()} ~ {event.endDate?.toLocaleString()}
-                </Text>
+                {(event.startDate || event.endDate) && (
+                  <Text fontWeight="medium" color="grey" fontSize="s">
+                    {event.startDate?.toLocaleDateString()} ~ {event.endDate?.toLocaleDateString()}
+                  </Text>
+                )}
 
                 <Text fontWeight="bold" color="black" fontSize="xl">
                   {event.title}
@@ -93,7 +95,7 @@ export default function EventDetailPage({ event }: EventDetailProps) {
               </HStack>
 
               <Text fontWeight="medium" color="secondary" fontSize="s" whiteSpace="pre-line">
-                {event.info}
+                {event.info?.replaceAll('<br>', '\n')}
               </Text>
             </CardBody>
           </Card>
