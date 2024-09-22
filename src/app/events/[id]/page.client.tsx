@@ -3,6 +3,7 @@
 import toast from 'react-hot-toast';
 import { Map, MapMarker, MapTypeControl, ZoomControl } from 'react-kakao-maps-sdk';
 
+import axios from 'axios';
 import haversineDistance from 'haversine-distance';
 
 import BottomMenu from '@/components/navbar/BottomMenu';
@@ -37,9 +38,17 @@ export default function EventDetailPage({ event }: EventDetailProps) {
           toast.success('위치 인증에 성공했습니다.', {
             id: 'locationDetect',
           });
+
+          axios.post('/api/event', {
+            eventId: event.id,
+          });
         } else {
           toast.error(`이벤트 장소 근처 100m 내에서 위치 인증해주세요.\n(현재 거리: ${distance.toFixed()}m)`, {
             id: 'locationDetect',
+          });
+
+          axios.post('/api/event', {
+            eventId: event.id,
           });
         }
       });
