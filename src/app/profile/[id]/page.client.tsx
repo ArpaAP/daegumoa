@@ -249,7 +249,7 @@ export default function ProfileContent({ user, profileImg, viewerId }: ProfilePr
             </HStack>
             <HStack>
               {/* 2.2.1. 둘러본 시장 수 */}
-              <Card variant="outline" width="100%" p="16px" borderRadius="10px" borderColor="success">
+              <Card variant="outline" width="100%" p="16px" borderRadius="10px" borderColor="success" boxShadow="">
                 <Text fontSize="s" fontWeight="light" color="success">
                   둘러본 시장 수
                 </Text>
@@ -258,7 +258,7 @@ export default function ProfileContent({ user, profileImg, viewerId }: ProfilePr
                 </Text>
               </Card>
               {/* 2.2.2. 방문한 축제 수 */}
-              <Card variant="outline" width="100%" p="16px" borderRadius="10px" borderColor="primary">
+              <Card variant="outline" width="100%" p="16px" borderRadius="10px" borderColor="primary" boxShadow="">
                 <Text fontSize="s" fontWeight="light" color="primary">
                   방문한 축제 수
                 </Text>
