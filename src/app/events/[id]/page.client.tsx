@@ -208,7 +208,7 @@ export default function EventDetailPage({ event }: EventDetailProps) {
             onClick={handleLocation}
           >
             <IconPosition />
-            <Text fontWeight="normal">위치 인증하기</Text>
+            <Text fontWeight="normal">방문 인증하기</Text>
           </Button>
         </Box>
       </Box>
