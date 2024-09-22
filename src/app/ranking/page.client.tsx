@@ -7,21 +7,21 @@ import { Box, Text, VStack } from '@chakra-ui/react';
 
 export default function RankingPageContent() {
   const data_1 = [
-    { nickname: 'W.Developer7773', badges: 6, profileImage: 'https://github.com/whitedev7773.png' },
-    { nickname: 'ArpaAP', badges: 5, profileImage: 'https://github.com/ArpaAP.png' },
-    { nickname: 'Jamie2779', badges: 3, profileImage: 'https://github.com/jamie2779.png' },
+    { nickname: 'W.Developer7773', badges: 17, profileImage: 'https://github.com/whitedev7773.png' },
+    { nickname: 'ArpaAP', badges: 15, profileImage: 'https://github.com/ArpaAP.png' },
+    { nickname: 'Jamie2779', badges: 12, profileImage: 'https://github.com/jamie2779.png' },
   ];
 
   const data_2 = [
-    { nickname: 'Jamie2779', badges: 3, profileImage: 'https://github.com/jamie2779.png' },
-    { nickname: 'W.Developer7773', badges: 6, profileImage: 'https://github.com/whitedev7773.png' },
-    { nickname: 'ArpaAP', badges: 5, profileImage: 'https://github.com/ArpaAP.png' },
+    { nickname: 'Jamie2779', badges: 17, profileImage: 'https://github.com/jamie2779.png' },
+    { nickname: 'Ahapwhs0414', badges: 15, profileImage: 'https://github.com/Ahapwhs0414.png' },
+    { nickname: 'ArpaAP', badges: 12, profileImage: 'https://github.com/ArpaAP.png' },
   ];
 
   const data_3 = [
-    { nickname: 'ArpaAP', badges: 5, profileImage: 'https://github.com/ArpaAP.png' },
-    { nickname: 'Jamie2779', badges: 3, profileImage: 'https://github.com/jamie2779.png' },
-    { nickname: 'W.Developer7773', badges: 6, profileImage: 'https://github.com/whitedev7773.png' },
+    { nickname: 'ArpaAP', badges: 17, profileImage: 'https://github.com/ArpaAP.png' },
+    { nickname: 'Jamie2779', badges: 15, profileImage: 'https://github.com/jamie2779.png' },
+    { nickname: 'W.Developer7773', badges: 12, profileImage: 'https://github.com/whitedev7773.png' },
   ];
 
   return (
