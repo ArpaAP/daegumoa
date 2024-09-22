@@ -2,19 +2,15 @@
 
 import { Map, MapMarker, MapTypeControl, ZoomControl } from 'react-kakao-maps-sdk';
 
-import dayjs from 'dayjs';
-
 import BottomMenu from '@/components/navbar/BottomMenu';
 
 import positionIcon from '@/assets/icons/position_primary.svg';
 import prevIcon from '@/assets/icons/prev.svg';
 
-import { Image } from '@chakra-ui/next-js';
-import { Box, Text, VStack, HStack, Tag, Card, Link, CardBody } from '@chakra-ui/react';
+import { IconPhone, IconPosition } from '@/icons';
+import { Image, Link } from '@chakra-ui/next-js';
+import { Box, Text, VStack, HStack, Tag, Card, CardBody } from '@chakra-ui/react';
 import { Event } from '@prisma/client';
-import duration from 'dayjs/plugin/duration';
-
-dayjs.extend(duration);
 
 interface EventDetailProps {
   event: Event;
@@ -43,6 +39,19 @@ export default function EventDetailPage({ event }: EventDetailProps) {
             bgPosition="center"
             rounded="10px"
           >
+            {!event.mainImg && (
+              <Text
+                position="absolute"
+                top="50%"
+                left="50%"
+                transform="translate(-50%, -50%)"
+                color="#ccc"
+                fontSize="xl"
+                fontWeight="bold"
+              >
+                이미지 없음
+              </Text>
+            )}
             <Box
               position="absolute"
               top="0"
@@ -56,44 +65,45 @@ export default function EventDetailPage({ event }: EventDetailProps) {
           <Card w="100%">
             <CardBody as={VStack} gap={4} align="left">
               <Box>
-                <Text fontWeight="medium" color="grey" fontSize="s">
-                  {event.startDate?.toLocaleString()} ~ {event.endDate?.toLocaleString()}
-                </Text>
+                {(event.startDate || event.endDate) && (
+                  <Text fontWeight="medium" color="grey" fontSize="s">
+                    {event.startDate?.toLocaleDateString()} ~ {event.endDate?.toLocaleDateString()}
+                  </Text>
+                )}
 
                 <Text fontWeight="bold" color="black" fontSize="xl">
                   {event.title}
                 </Text>
               </Box>
 
-              <HStack gap="20px">
+              <HStack gap="20px" color="primary">
                 <HStack>
-                  <Image src={positionIcon} alt="" boxSize="16px" />
-                  <Text fontSize="xs" color="primary">
-                    {event.addr2}
-                  </Text>
+                  <IconPosition boxSize="16px" />
+                  <Text fontSize="xs">{event.addr2}</Text>
                 </HStack>
                 <HStack>
-                  <Image src={positionIcon} alt="" boxSize="16px" />
-                  <Text fontSize="xs" color="primary">
-                    {event.tel}
-                  </Text>
+                  <IconPhone boxSize="16px" />
+                  <Text fontSize="xs">{event.tel}</Text>
                 </HStack>
               </HStack>
 
               <HStack gap={1}>
                 <Tag fontSize="xs" fontWeight="light" bg="secondary" color="white" rounded="5">
-                  asdf
+                  {event.tag === 'MARKET'
+                    ? '시장'
+                    : event.tag === 'FESTIVAL'
+                      ? '축제'
+                      : event.tag === 'PERFORM'
+                        ? '공연/전시'
+                        : '기타'}
                 </Tag>
                 <Tag fontSize="xs" fontWeight="light" bg="primary" color="white">
                   진행중
                 </Tag>
-                <Tag fontSize="xs" fontWeight="light" variant="outline" color="primary">
-                  asdf
-                </Tag>
               </HStack>
 
               <Text fontWeight="medium" color="secondary" fontSize="s" whiteSpace="pre-line">
-                {event.info}
+                {event.info?.replaceAll('<br>', '\n')}
               </Text>
             </CardBody>
           </Card>
