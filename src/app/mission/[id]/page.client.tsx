@@ -4,8 +4,6 @@ import { useEffect, useState } from 'react';
 
 import dayjs from 'dayjs';
 
-import BottomMenu from '@/components/navbar/BottomMenu';
-
 import checkIcon from '@/assets/icons/check.svg';
 import clockDanger from '@/assets/icons/clock_danger.svg';
 import clockSuccess from '@/assets/icons/clock_success.svg';
@@ -116,79 +114,62 @@ export default function MissionPageContent({ mission }: MissionDetailProps) {
           rounded="10px"
         >
           <Box
-            position="relative"
+            position="absolute"
+            top="0"
+            left="0"
             w="100%"
-            h="200"
-            backgroundImage={mission.missionImg}
-            bgSize="cover"
-            bgRepeat="no-repeat"
-            bgPosition="center"
-            rounded="10px"
-          >
-            <Box
-              position="absolute"
-              top="0"
-              left="0"
-              w="100%"
-              h="100%"
-              bgGradient="linear(to-t, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0))"
-              borderRadius="md"
-            />
-          </Box>
-          <Card w="100%">
-            <CardBody>
+            h="100%"
+            bgGradient="linear(to-t, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0))"
+            borderRadius="md"
+          />
+        </Box>
+        <Card w="100%">
+          <CardBody>
+            <HStack>
+              <Image src={message.includes('일') ? clockSuccess : clockDanger} alt="" boxSize="14px" p="0" />
+              <Text fontWeight="bold" color={message.includes('일') ? 'success' : 'danger'} fontSize="m">
+                {message}
+              </Text>
+            </HStack>
+
+            <Text fontWeight="bold" color="black" fontSize="xl">
+              {mission.title}
+            </Text>
+
+            <HStack gap="20px" py="10px">
               <HStack>
-                <Image src={message.includes('일') ? clockSuccess : clockDanger} alt="" boxSize="14px" p="0" />
-                <Text fontWeight="bold" color={message.includes('일') ? 'success' : 'danger'} fontSize="m">
-                  {message}
+                <Image src={positionIcon} alt="" boxSize="16px" />
+                <Text fontSize="m" color="primary">
+                  {mission.event.addr2}
                 </Text>
               </HStack>
-
-              <Text fontWeight="bold" color="black" fontSize="xl">
-                {mission.title}
-              </Text>
-
-              <HStack gap="20px" py="10px">
+              <Link href={`/event/${mission.event.id}`} _hover={{ textDecoration: 'none' }}>
                 <HStack>
-                  <Image src={positionIcon} alt="" boxSize="16px" />
+                  <Image src={starIcon} alt="" boxSize="16px" />
                   <Text fontSize="m" color="primary">
-                    {mission.event.addr2}
+                    {mission.event.title}
                   </Text>
                 </HStack>
-                <Link href={`/event/${mission.event.id}`} _hover={{ textDecoration: 'none' }}>
-                  <HStack>
-                    <Image src={starIcon} alt="" boxSize="16px" />
-                    <Text fontSize="m" color="primary">
-                      {mission.event.title}
-                    </Text>
-                  </HStack>
-                </Link>
-              </HStack>
+              </Link>
+            </HStack>
 
-              <VStack>
-                <HStack justifyContent="space-between" w="full">
-                  <HStack gap="4px">
-                    <Tag fontSize="m" fontWeight="light" bg="secondary" color="white" rounded="5">
-                      {mission.tag === 'MARKET'
-                        ? '시장'
-                        : mission.tag === 'FESTIVAL'
-                          ? '축제'
-                          : mission.tag === 'PERFORM'
-                            ? '공연/전시'
-                            : '기타'}
-                    </Tag>
-                    <Tag fontSize="m" fontWeight="light" bg="primary" color="white">
-                      진행중
-                    </Tag>
-                    <Tag fontSize="m" fontWeight="light" variant="outline" color="primary">
-                      {mission.difficulty === 'EASY' ? '쉬움' : mission.difficulty === 'NORMAL' ? '보통' : '어려움'}
-                    </Tag>
-                  </HStack>
-                  <Tag bg="black" color="white" rounded="20px" px="10px" py="5px">
-                    <TagLeftIcon boxSize="16px" as={Image} src={checkIcon} alt="" />
-                    <TagLabel fontSize="m">
-                      참여자 {mission.holders.filter((holders) => holders.status === 'COMPLETE').length}명
-                    </TagLabel>
+            <VStack>
+              <HStack justifyContent="space-between" w="full">
+                <HStack gap="4px">
+                  <Tag fontSize="m" fontWeight="light" bg="secondary" color="white" rounded="5">
+                    {mission.tag === 'MARKET'
+                      ? '시장'
+                      : mission.tag === 'FESTIVAL'
+                        ? '축제'
+                        : mission.tag === 'PERFORM'
+                          ? '공연/전시'
+                          : '기타'}
+                  </Tag>
+                  <Tag fontSize="m" fontWeight="light" bg="primary" color="white">
+                    진행중
+                  </Tag>
+                  <Tag fontSize="m" fontWeight="light" variant="outline" color="primary">
+                    {mission.difficulty === 'EASY' ? '쉬움' : mission.difficulty === 'NORMAL' ? '보통' : '어려움'}
                   </Tag>
                 </HStack>
                 <Tag bg="black" color="white" rounded="20px" px="10px" py="5px">
