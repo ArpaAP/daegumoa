@@ -43,7 +43,7 @@ export default function HomePage({ events }: HomePageProps) {
                 <Tab>전체</Tab>
                 <Tab>시장</Tab>
                 <Tab>축제</Tab>
-                <Tab>공연</Tab>
+                <Tab>공연/전시</Tab>
                 <Tab>기타</Tab>
               </TabList>
 

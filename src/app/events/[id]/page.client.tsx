@@ -7,6 +7,7 @@ import BottomMenu from '@/components/navbar/BottomMenu';
 import positionIcon from '@/assets/icons/position_primary.svg';
 import prevIcon from '@/assets/icons/prev.svg';
 
+import { IconPhone, IconPosition } from '@/icons';
 import { Image, Link } from '@chakra-ui/next-js';
 import { Box, Text, VStack, HStack, Tag, Card, CardBody } from '@chakra-ui/react';
 import { Event } from '@prisma/client';
@@ -62,30 +63,29 @@ export default function EventDetailPage({ event }: EventDetailProps) {
                 </Text>
               </Box>
 
-              <HStack gap="20px">
+              <HStack gap="20px" color="primary">
                 <HStack>
-                  <Image src={positionIcon} alt="" boxSize="16px" />
-                  <Text fontSize="xs" color="primary">
-                    {event.addr2}
-                  </Text>
+                  <IconPosition boxSize="16px" />
+                  <Text fontSize="xs">{event.addr2}</Text>
                 </HStack>
                 <HStack>
-                  <Image src={positionIcon} alt="" boxSize="16px" />
-                  <Text fontSize="xs" color="primary">
-                    {event.tel}
-                  </Text>
+                  <IconPhone boxSize="16px" />
+                  <Text fontSize="xs">{event.tel}</Text>
                 </HStack>
               </HStack>
 
               <HStack gap={1}>
                 <Tag fontSize="xs" fontWeight="light" bg="secondary" color="white" rounded="5">
-                  asdf
+                  {event.tag === 'MARKET'
+                    ? '시장'
+                    : event.tag === 'FESTIVAL'
+                      ? '축제'
+                      : event.tag === 'PERFORM'
+                        ? '공연/전시'
+                        : '기타'}
                 </Tag>
                 <Tag fontSize="xs" fontWeight="light" bg="primary" color="white">
                   진행중
-                </Tag>
-                <Tag fontSize="xs" fontWeight="light" variant="outline" color="primary">
-                  asdf
                 </Tag>
               </HStack>
 
