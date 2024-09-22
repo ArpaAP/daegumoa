@@ -2,7 +2,8 @@
 
 import BottomMenu from '@/components/navbar/BottomMenu';
 
-import { Avatar, createIcon, Flex, HStack, Link, Spacer, Text, VStack } from '@chakra-ui/react';
+import { Link } from '@chakra-ui/next-js';
+import { Avatar, createIcon, Flex, HStack, Spacer, Text, VStack } from '@chakra-ui/react';
 
 function refineName(str: string) {
   const trimmedStr = str.substring(0, 6);

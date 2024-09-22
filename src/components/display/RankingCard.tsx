@@ -1,4 +1,5 @@
-import { Avatar, Flex, Text, VStack, Link } from '@chakra-ui/react';
+import { Link } from '@chakra-ui/next-js';
+import { Avatar, Flex, Text, VStack } from '@chakra-ui/react';
 
 function refineName(str: string) {
   const trimmedStr = str.substring(0, 6);
