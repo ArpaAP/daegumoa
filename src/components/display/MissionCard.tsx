@@ -67,6 +67,13 @@ const MissionCard: React.FC<MissionCardProps> = ({ mission }) => {
 
     return () => clearInterval(interval); // 컴포넌트 언마운트 시 인터벌 정리
   }, [mission.startTime, mission.endTime]);
+
+  const now = dayjs(); // 현재 시간
+  const start = dayjs(mission.startTime); // 이벤트 시작 시간
+  const end = dayjs(mission.endTime); // 이벤트 종료 시간
+
+  const status = now.isBefore(start) ? 'WAITING' : now.isAfter(end) ? 'END' : 'PROGRESS';
+
   return (
     <Link href={`/mission/${mission.id}`} w="100%" _hover={{ textDecoration: 'none' }}>
       <Card w="100%" rounded="20">
@@ -122,8 +129,13 @@ const MissionCard: React.FC<MissionCardProps> = ({ mission }) => {
                         ? '공연/전시'
                         : '기타'}
                 </Tag>
-                <Tag fontSize="xs" fontWeight="light" bg="primary" color="white">
-                  진행중
+                <Tag
+                  fontSize="xs"
+                  fontWeight="light"
+                  bg={status === 'WAITING' ? 'success' : status === 'PROGRESS' ? 'primary' : 'danger'}
+                  color="white"
+                >
+                  {status === 'WAITING' ? '대기중' : status === 'END' ? '종료' : '진행중'}
                 </Tag>
                 <Tag fontSize="xs" fontWeight="light" variant="outline" color="primary">
                   {mission.difficulty === 'EASY' ? '쉬움' : mission.difficulty === 'NORMAL' ? '보통' : '어려움'}
@@ -131,9 +143,7 @@ const MissionCard: React.FC<MissionCardProps> = ({ mission }) => {
               </HStack>
               <Tag bg="black" color="white" rounded="20px" px="10px" py="5px">
                 <TagLeftIcon boxSize="16px" as={Image} src={checkIcon} alt="" />
-                <TagLabel fontSize="xs">
-                  참여자 {mission.missionHolders.filter((holders) => holders.status === 'COMPLETE').length}명
-                </TagLabel>
+                <TagLabel fontSize="xs">참여자 {mission.missionHolders.length}명</TagLabel>
               </Tag>
             </HStack>
           </VStack>
