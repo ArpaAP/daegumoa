@@ -326,7 +326,7 @@ export default function MissionPageContent({ mission }: MissionDetailProps) {
               bottom="60px"
               px="20px"
               py="15px"
-              zIndex={99998}
+              zIndex={998}
               bg="var(--background)"
             >
               <Button

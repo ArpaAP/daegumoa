@@ -194,7 +194,7 @@ export default function EventDetailPage({ event }: EventDetailProps) {
           bottom="60px"
           px="20px"
           py="15px"
-          zIndex={99998}
+          zIndex={998}
           bg="var(--background)"
         >
           <Button
