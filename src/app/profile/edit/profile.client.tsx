@@ -10,7 +10,8 @@ import Badge from '@/components/profile/Badge';
 import prevIcon from '@/assets/icons/prev.svg';
 
 import { Image, Link } from '@chakra-ui/next-js';
-import { Button, Flex, FormControl, FormLabel, HStack, Input, Select, Text, VStack } from '@chakra-ui/react';
+import { Box, Button, Flex, FormControl, FormLabel, HStack, Input, Select, Text, VStack } from '@chakra-ui/react';
+import { User } from '@prisma/client';
 
 export interface ProfileEditFormState {
   nickname: string;
@@ -18,22 +19,12 @@ export interface ProfileEditFormState {
   representRanking: string;
 }
 
-export default function ProfileEditContent() {
-  const { register, handleSubmit } = useForm<ProfileEditFormState>();
+interface ProfileEditContentProps {
+  user: User;
+}
 
-  // 나중에 백엔드에서 user 불러오세유
-  const user = {
-    id: 23,
-    email: 'w.developer7773@gmail.com',
-    name: '장기원',
-    nickname: 'w.developer7773',
-    profileImgId: null,
-    badgeId: 4,
-    createdDate: Date.now(),
-    modifiedDate: Date.now(),
-    // 기존 User필드에 profileImg추가
-    profileImg: 'https://github.com/whitedev7773.png',
-  };
+export default function ProfileEditContent({ user }: ProfileEditContentProps) {
+  const { register, handleSubmit } = useForm<ProfileEditFormState>();
 
   const badge_list = [
     { level: 1, name: '초보 탐험가', desc: '시장을 1개 방문하세요.' },
@@ -93,15 +84,19 @@ export default function ProfileEditContent() {
       </HStack>
       {/* 프로필 기본 정보 (이미지/이름/메인 뱃지) */}
       <HStack spacing="16px" p="0px 10px" boxSizing="border-box">
-        <Image
-          width="72"
-          height="72"
-          boxSize="72px"
-          borderRadius="full"
-          src={user.profileImg}
-          alt={`${user.nickname}님의 프로필 이미지`}
-          priority
-        />
+        {user.profileImg ? (
+          <Image
+            width="72"
+            height="72"
+            boxSize="72px"
+            borderRadius="full"
+            src={user.profileImg}
+            alt={`${user.nickname}님의 프로필 이미지`}
+            priority
+          />
+        ) : (
+          <Box width="72px" height="72px" borderRadius="full" bg="grey.shade2" />
+        )}
         <VStack spacing="0px">
           <Badge info={badge_list[4]} />
           <Text fontSize="xl" fontWeight="bold" color="primary.shade4">
@@ -124,7 +119,7 @@ export default function ProfileEditContent() {
             {...register('nickname', {
               required: '닉네임은 필수 입력값입니다.',
             })}
-            defaultValue={user.nickname}
+            defaultValue={user.nickname ?? ''}
           />
         </FormControl>
         <FormControl p="10px">
