@@ -39,7 +39,7 @@ import { useRouter } from 'next/navigation';
 type NewBadgeHolder = BadgeHolder & { badge: prismaBadge };
 type NewEventHolder = EventHolder & { event: Event };
 // User에 대표 뱃지와 badgeHolders 포함
-type NewUser = User & { badge: prismaBadge } & { badgeHolders: NewBadgeHolder[] } & {
+type NewUser = User & { badge: prismaBadge | null } & { badgeHolders: NewBadgeHolder[] } & {
   missionHolders: MissionHolder[];
 } & { eventHolders: NewEventHolder[] };
 
