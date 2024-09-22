@@ -36,7 +36,7 @@ export default async function Profile({ params }: { params: { id: string } }) {
       where: { email: session.user.email },
     });
 
-    return <ProfileContent user={user} viewerId={viewer?.id ?? null} />;
+    return <ProfileContent user={user} profileImg={session.user.image ?? null} viewerId={viewer?.id ?? null} />;
   } else {
     return <></>;
   }

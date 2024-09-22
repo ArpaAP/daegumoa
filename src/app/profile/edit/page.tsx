@@ -33,5 +33,5 @@ export default async function Profile() {
 
   const badge_list = badges.map((badgeHolder) => badgeHolder.badge);
 
-  return <ProfileEditContent user={user} badge_list={badge_list} />;
+  return <ProfileEditContent user={user} profileImg={session.user.image ?? null} badge_list={badge_list} />;
 }

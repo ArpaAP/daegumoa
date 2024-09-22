@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import QRCode from 'react-qr-code';
 
+import BottomMenu from '@/components/navbar/BottomMenu';
 import Badge from '@/components/profile/Badge';
 
 import editColoredIcon from '@/assets/icons/edit_colored.svg';
@@ -45,10 +46,11 @@ type NewUser = User & { badge: prismaBadge | null } & { badgeHolders: NewBadgeHo
 
 interface ProfileProps {
   user?: NewUser | null;
+  profileImg: string | null;
   viewerId: number | null;
 }
 
-export default function ProfileContent({ user, viewerId }: ProfileProps) {
+export default function ProfileContent({ user, profileImg, viewerId }: ProfileProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [fullUrl, setFullUrl] = useState('');
 
@@ -117,7 +119,7 @@ export default function ProfileContent({ user, viewerId }: ProfileProps) {
             height="72"
             boxSize="72px"
             borderRadius="full"
-            src={user.profileImg || personIcon}
+            src={profileImg || personIcon}
             alt={`${user.nickname}님의 프로필 이미지`}
             priority
           />
@@ -268,6 +270,8 @@ export default function ProfileContent({ user, viewerId }: ProfileProps) {
           </VStack>
         </Flex>
       </Flex>
+
+      <BottomMenu />
     </>
   );
 }
