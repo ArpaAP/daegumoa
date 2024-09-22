@@ -1,5 +1,7 @@
 'use client';
 
+import BottomMenu from '@/components/navbar/BottomMenu';
+
 import { Avatar, createIcon, Flex, HStack, Link, Spacer, Text, VStack } from '@chakra-ui/react';
 
 function refineName(str: string) {
@@ -52,115 +54,118 @@ export default function DetailedRankingPageContent({ route }: { route: string })
   ];
 
   return (
-    <VStack align="start">
-      <HStack mt="20px" padding="20px">
-        <Link href="/ranking">
-          <PrevIcon />
-        </Link>
-        <Text fontSize="l" fontWeight="medium" color="primary">
-          랭킹
-        </Text>
-      </HStack>
-      <Flex
-        width="calc(100% - 40px)"
-        direction="column"
-        justifyContent="center"
-        alignItems="center"
-        gap="20px"
-        boxShadow="card"
-        m="20px"
-        p="30px"
-        bgColor="white"
-        borderRadius="card"
-        boxSizing="border-box"
-      >
-        <Text fontSize="l" fontWeight="bold">
-          {getTitleByRoute(route)}
-        </Text>
-        <Flex justifyContent="center" alignItems="end" gap="30px" align="end">
-          {/* 2등 */}
-          <VStack spacing="10px">
-            <Text
-              fontSize="s"
-              fontWeight="medium"
-              padding="4px 7px 3px 7px"
-              color="white"
-              bgColor="#bbbbbb"
-              borderRadius="6px"
-            >
-              2등
-            </Text>
-            <Avatar boxSize="60px" src={data[1].profileImage} />
-            <VStack spacing="0">
-              <Text fontSize="s" fontWeight="bold">
-                {refineName(data[1].nickname)}님
+    <>
+      <VStack align="start">
+        <HStack mt="20px" padding="20px">
+          <Link href="/ranking">
+            <PrevIcon />
+          </Link>
+          <Text fontSize="l" fontWeight="medium" color="primary">
+            랭킹
+          </Text>
+        </HStack>
+        <Flex
+          width="calc(100% - 40px)"
+          direction="column"
+          justifyContent="center"
+          alignItems="center"
+          gap="20px"
+          boxShadow="card"
+          m="20px"
+          p="30px"
+          bgColor="white"
+          borderRadius="card"
+          boxSizing="border-box"
+        >
+          <Text fontSize="l" fontWeight="bold">
+            {getTitleByRoute(route)}
+          </Text>
+          <Flex justifyContent="center" alignItems="end" gap="30px" align="end">
+            {/* 2등 */}
+            <VStack spacing="10px">
+              <Text
+                fontSize="s"
+                fontWeight="medium"
+                padding="4px 7px 3px 7px"
+                color="white"
+                bgColor="#bbbbbb"
+                borderRadius="6px"
+              >
+                2등
               </Text>
-              <Text fontSize="xs" fontWeight="medium" color="grey">
-                뱃지 {data[1].badges}개
-              </Text>
+              <Avatar boxSize="60px" src={data[1].profileImage} />
+              <VStack spacing="0">
+                <Text fontSize="s" fontWeight="bold">
+                  {refineName(data[1].nickname)}님
+                </Text>
+                <Text fontSize="xs" fontWeight="medium" color="grey">
+                  뱃지 {data[1].badges}개
+                </Text>
+              </VStack>
             </VStack>
-          </VStack>
-          {/* 1등 */}
-          <VStack spacing="10px">
-            <Text
-              fontSize="s"
-              fontWeight="medium"
-              padding="4px 7px 3px 7px"
-              color="white"
-              bgColor="#ECC80E"
-              borderRadius="6px"
-            >
-              1등
-            </Text>
-            <Avatar boxSize="72px" src={data[0].profileImage} />
-            <VStack spacing="0">
-              <Text fontSize="m" fontWeight="bold">
-                {refineName(data[0].nickname)}님
+            {/* 1등 */}
+            <VStack spacing="10px">
+              <Text
+                fontSize="s"
+                fontWeight="medium"
+                padding="4px 7px 3px 7px"
+                color="white"
+                bgColor="#ECC80E"
+                borderRadius="6px"
+              >
+                1등
               </Text>
-              <Text fontSize="xs" fontWeight="medium" color="grey">
-                뱃지 {data[0].badges}개
-              </Text>
+              <Avatar boxSize="72px" src={data[0].profileImage} />
+              <VStack spacing="0">
+                <Text fontSize="m" fontWeight="bold">
+                  {refineName(data[0].nickname)}님
+                </Text>
+                <Text fontSize="xs" fontWeight="medium" color="grey">
+                  뱃지 {data[0].badges}개
+                </Text>
+              </VStack>
             </VStack>
-          </VStack>
-          {/* 3등 */}
-          <VStack spacing="10px">
-            <Text
-              fontSize="s"
-              fontWeight="medium"
-              padding="4px 7px 3px 7px"
-              color="white"
-              bgColor="#746202"
-              borderRadius="6px"
-            >
-              3등
-            </Text>
-            <Avatar boxSize="48px" src={data[2].profileImage} />
-            <VStack spacing="0">
-              <Text fontSize="xs" fontWeight="bold">
-                {refineName(data[2].nickname)}님
+            {/* 3등 */}
+            <VStack spacing="10px">
+              <Text
+                fontSize="s"
+                fontWeight="medium"
+                padding="4px 7px 3px 7px"
+                color="white"
+                bgColor="#746202"
+                borderRadius="6px"
+              >
+                3등
               </Text>
-              <Text fontSize="xs" fontWeight="medium" color="grey">
-                뱃지 {data[2].badges}개
-              </Text>
+              <Avatar boxSize="48px" src={data[2].profileImage} />
+              <VStack spacing="0">
+                <Text fontSize="xs" fontWeight="bold">
+                  {refineName(data[2].nickname)}님
+                </Text>
+                <Text fontSize="xs" fontWeight="medium" color="grey">
+                  뱃지 {data[2].badges}개
+                </Text>
+              </VStack>
             </VStack>
-          </VStack>
-        </Flex>
-        {/* 그 외 나머지 랭킹 */}
-        <Spacer height="30px" />
-        {data.slice(3).map((e, i) => (
-          <Flex key={i} width="100%" justifyContent="space-around" alignItems="center">
-            <HStack>
-              <Text width="55px" fontSize="m" fontWeight="bold" color="secondary">
-                {i + 4}등
-              </Text>
-              <Text fontSize="m">{refineName(e.nickname)}님</Text>
-            </HStack>
-            <Text fontSize="m" fontWeight="regular" color="grey">
-              뱃지 {e.badges}개
-            </Text>
           </Flex>
-        ))}
-      </Flex>
-    </VStack>
+          {/* 그 외 나머지 랭킹 */}
+          <Spacer height="30px" />
+          {data.slice(3).map((e, i) => (
+            <Flex key={i} width="100%" justifyContent="space-around" alignItems="center">
+              <HStack>
+                <Text width="55px" fontSize="m" fontWeight="bold" color="secondary">
+                  {i + 4}등
+                </Text>
+                <Text fontSize="m">{refineName(e.nickname)}님</Text>
+              </HStack>
+              <Text fontSize="m" fontWeight="regular" color="grey">
+                뱃지 {e.badges}개
+              </Text>
+            </Flex>
+          ))}
+        </Flex>
+      </VStack>
+      <BottomMenu />
+    </>
   );
 }
