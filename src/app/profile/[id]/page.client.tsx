@@ -45,9 +45,10 @@ type NewUser = User & { badge: prismaBadge | null } & { badgeHolders: NewBadgeHo
 
 interface ProfileProps {
   user?: NewUser | null;
+  viewerId: number | null;
 }
 
-export default function ProfileContent({ user }: ProfileProps) {
+export default function ProfileContent({ user, viewerId }: ProfileProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [fullUrl, setFullUrl] = useState('');
 
@@ -129,18 +130,24 @@ export default function ProfileContent({ user }: ProfileProps) {
         </Flex>
         {/* 프로필 수정/공유 */}
         <ButtonGroup padding="0px 20px" width="100%" boxSizing="border-box">
-          <Button
-            width="100%"
-            leftIcon={<Image boxSize="20px" src={editColoredIcon} alt="프로필 수정" />}
-            textColor="primary"
-            borderColor="primary"
-            variant="outline"
-            fontSize="s"
-            fontWeight="regular"
-            onClick={() => router.push('/profile/edit')}
-          >
-            프로필 수정
-          </Button>
+          {
+            // 로그인한 유저와 프로필 주인이 같을 때만 수정 버튼 보이기
+            viewerId === user.id && (
+              <Button
+                width="100%"
+                leftIcon={<Image boxSize="20px" src={editColoredIcon} alt="프로필 수정" />}
+                textColor="primary"
+                borderColor="primary"
+                variant="outline"
+                fontSize="s"
+                fontWeight="regular"
+                onClick={() => router.push('/profile/edit')}
+              >
+                프로필 수정
+              </Button>
+            )
+          }
+
           <Button
             leftIcon={<Image boxSize="18px" src={uploadIcon} alt="프로필 공유" />}
             width="100%"
