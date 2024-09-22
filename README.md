@@ -68,11 +68,15 @@
 ### 구현 방식
 
 > FE/BE: Next.js (React + TypeScript)
->
-> MySQL ORM: Prisma
->
+
 > Image Storage: Firebase
 >
+> MySQL ORM: Prisma
+
+<img src="./.readme/erd.png">
+
+<br/>
+
 > Production: Vercel
 
 <img src="./.readme/architecture.png">
