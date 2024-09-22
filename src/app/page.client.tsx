@@ -5,7 +5,7 @@ import { useState } from 'react';
 import EventCard from '@/components/display/EventCard';
 import BottomMenu from '@/components/navbar/BottomMenu';
 
-import banner from '@/assets/banner.png';
+import banner from '@/assets/banner.svg';
 
 import { Image } from '@chakra-ui/next-js';
 import { Box, Card, CardBody, Input, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack } from '@chakra-ui/react';
