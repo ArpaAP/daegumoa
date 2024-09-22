@@ -2,19 +2,14 @@
 
 import { Map, MapMarker, MapTypeControl, ZoomControl } from 'react-kakao-maps-sdk';
 
-import dayjs from 'dayjs';
-
 import BottomMenu from '@/components/navbar/BottomMenu';
 
 import positionIcon from '@/assets/icons/position_primary.svg';
 import prevIcon from '@/assets/icons/prev.svg';
 
-import { Image } from '@chakra-ui/next-js';
-import { Box, Text, VStack, HStack, Tag, Card, Link, CardBody } from '@chakra-ui/react';
+import { Image, Link } from '@chakra-ui/next-js';
+import { Box, Text, VStack, HStack, Tag, Card, CardBody } from '@chakra-ui/react';
 import { Event } from '@prisma/client';
-import duration from 'dayjs/plugin/duration';
-
-dayjs.extend(duration);
 
 interface EventDetailProps {
   event: Event;
