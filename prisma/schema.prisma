@@ -65,7 +65,7 @@ model Mission {
   createdDate  DateTime   @default(now())
   modifiedDate DateTime   @default(now()) @updatedAt
 
-  events         Event           @relation("MissionEvent", fields: [eventId], references: [id])
+  event          Event           @relation("MissionEvent", fields: [eventId], references: [id])
   missionHolders MissionHolder[]
 }
 

@@ -10,20 +10,8 @@ import clockDanger from '@/assets/icons/clock_danger.svg';
 import clockSuccess from '@/assets/icons/clock_success.svg';
 import positionIcon from '@/assets/icons/position.svg';
 
-import { Image } from '@chakra-ui/next-js';
-import {
-  Box,
-  Card,
-  CardHeader,
-  CardBody,
-  VStack,
-  HStack,
-  Tag,
-  TagLeftIcon,
-  TagLabel,
-  Text,
-  Link,
-} from '@chakra-ui/react';
+import { Image, Link } from '@chakra-ui/next-js';
+import { Box, Card, CardHeader, CardBody, VStack, HStack, Tag, TagLeftIcon, TagLabel, Text } from '@chakra-ui/react';
 import { Mission, Event, MissionHolder } from '@prisma/client';
 import duration from 'dayjs/plugin/duration';
 
@@ -31,7 +19,7 @@ dayjs.extend(duration);
 
 const startMessage: string = '미션이 곧 시작됩니다.';
 const endMessage: string = '종료된 미션입니다';
-type MissionWithImageAndEventAndHolder = Mission & { event: Event } & { holders: MissionHolder[] };
+type MissionWithImageAndEventAndHolder = Mission & { event: Event } & { missionHolders: MissionHolder[] };
 
 interface MissionCardProps {
   mission: MissionWithImageAndEventAndHolder;
@@ -144,7 +132,7 @@ const MissionCard: React.FC<MissionCardProps> = ({ mission }) => {
               <Tag bg="black" color="white" rounded="20px" px="10px" py="5px">
                 <TagLeftIcon boxSize="16px" as={Image} src={checkIcon} alt="" />
                 <TagLabel fontSize="xs">
-                  참여자 {mission.holders.filter((holders) => holders.status === 'COMPLETE').length}명
+                  참여자 {mission.missionHolders.filter((holders) => holders.status === 'COMPLETE').length}명
                 </TagLabel>
               </Tag>
             </HStack>

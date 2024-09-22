@@ -14,7 +14,7 @@ import prevIcon from '@/assets/icons/prev.svg';
 import starIcon from '@/assets/icons/star_primary.svg';
 import uploadIcon from '@/assets/icons/upload.svg';
 
-import { Image } from '@chakra-ui/next-js';
+import { Image, Link } from '@chakra-ui/next-js';
 import {
   Box,
   Text,
@@ -25,7 +25,6 @@ import {
   TagLeftIcon,
   TagLabel,
   Card,
-  Link,
   CardBody,
   useDisclosure,
   Modal,
@@ -41,10 +40,10 @@ import duration from 'dayjs/plugin/duration';
 
 dayjs.extend(duration);
 
-type MissionWithImageAndEventAndHolder = Mission & { event: Event } & { holders: MissionHolder[] };
+type MissionWithEventAndHolder = Mission & { event: Event } & { missionHolders: MissionHolder[] };
 
 interface MissionDetailProps {
-  mission: MissionWithImageAndEventAndHolder;
+  mission: MissionWithEventAndHolder;
 }
 
 const startMessage: string = '미션이 곧 시작됩니다.';
@@ -96,17 +95,26 @@ export default function MissionPageContent({ mission }: MissionDetailProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <>
-      <Box h="100dvh" px="20px" py="30px" w="full" position="relative">
-        <Link href="/mission" _hover={{ textDecoration: 'none' }}>
-          <HStack px="10px" py="20px">
-            <Image src={prevIcon} alt="" boxSize="16px" />
-            <Text fontSize="xl" color="primary" fontWeight="Bold">
-              미션 정보
-            </Text>
-          </HStack>
-        </Link>
-        <VStack gap="20px">
+    <Box h="100dvh" px="20px" py="30px" w="full">
+      <Link href="/mission" _hover={{ textDecoration: 'none' }}>
+        <HStack px="10px" py="20px">
+          <Image src={prevIcon} alt="" boxSize="16px" />
+          <Text fontSize="xl" color="primary" fontWeight="Bold">
+            미션 정보
+          </Text>
+        </HStack>
+      </Link>
+      <VStack gap="20px" pb="150px">
+        <Box
+          position="relative"
+          w="100%"
+          h="200"
+          backgroundImage={mission.missionImg}
+          bgSize="cover"
+          bgRepeat="no-repeat"
+          bgPosition="center"
+          rounded="10px"
+        >
           <Box
             position="relative"
             w="100%"
@@ -183,22 +191,30 @@ export default function MissionPageContent({ mission }: MissionDetailProps) {
                     </TagLabel>
                   </Tag>
                 </HStack>
-              </VStack>
-            </CardBody>
-          </Card>
-          <Card w="100%">
-            <CardBody>
-              <Text fontSize="l" color="secondary" fontWeight="bold" pb="5px">
-                미션 내용
+                <Tag bg="black" color="white" rounded="20px" px="10px" py="5px">
+                  <TagLeftIcon boxSize="16px" as={Image} src={checkIcon} alt="" />
+                  <TagLabel fontSize="m">
+                    참여자 {mission.missionHolders.filter((holders) => holders.status === 'COMPLETE').length}명
+                  </TagLabel>
+                </Tag>
+              </HStack>
+            </VStack>
+          </CardBody>
+        </Card>
+        <Card w="100%">
+          <CardBody>
+            <Text fontSize="l" color="secondary" fontWeight="bold" pb="5px">
+              미션 내용
+            </Text>
+            {mission.info.split('<br>').map((line, index) => (
+              <Text key={index} fontSize="m" color="black" fontWeight="bold">
+                {line}
               </Text>
-              {mission.info.split('\n').map((line, index) => (
-                <Text key={index} fontSize="m" color="black" fontWeight="bold">
-                  {line}
-                </Text>
-              ))}
-            </CardBody>
-          </Card>
-        </VStack>
+            ))}
+          </CardBody>
+        </Card>
+      </VStack>
+      {message != endMessage && message != startMessage && message != '' && (
         <Button
           position="absolute"
           bottom="80px"
@@ -216,25 +232,23 @@ export default function MissionPageContent({ mission }: MissionDetailProps) {
           <Image src={uploadIcon} alt=""></Image>
           <Text fontWeight="normal">사진 업로드</Text>
         </Button>
-        <Modal isOpen={isOpen} onClose={onClose} isCentered>
-          <ModalOverlay />
-          <ModalContent w="full" mx="20px">
-            <ModalHeader>사진 업로드</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              <Text>미션을 수행한 사진을 업로드해주세요.</Text>
-            </ModalBody>
+      )}
+      <Modal isOpen={isOpen} onClose={onClose} isCentered>
+        <ModalOverlay />
+        <ModalContent w="full" mx="20px">
+          <ModalHeader>사진 업로드</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text>미션을 수행한 사진을 업로드해주세요.</Text>
+          </ModalBody>
 
-            <ModalFooter>
-              <Button colorScheme="primary" mr={3} onClick={onClose}>
-                업로드
-              </Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
-      </Box>
-
-      <BottomMenu />
-    </>
+          <ModalFooter>
+            <Button colorScheme="primary" mr={3} onClick={onClose}>
+              업로드
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </Box>
   );
 }
