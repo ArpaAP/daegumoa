@@ -35,6 +35,7 @@ export async function POST(request: NextRequest) {
       email: session.user.email!,
       name: data.name,
       nickname: data.nickname,
+      profileImg: session.user.image,
     },
   });
 
