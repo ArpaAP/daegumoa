@@ -130,7 +130,7 @@ export default function MissionPageContent({ mission }: MissionDetailProps) {
             <CardBody>
               <HStack>
                 <Image src={message.includes('일') ? clockSuccess : clockDanger} alt="" boxSize="14px" p="0" />
-                <Text fontWeight="bold" color={message.includes('일') ? 'success' : 'danger'} fontSize="m">
+                <Text fontWeight="bold" color={message.includes('일') ? 'success' : 'danger'} fontSize="xs">
                   {message}
                 </Text>
               </HStack>
@@ -142,14 +142,14 @@ export default function MissionPageContent({ mission }: MissionDetailProps) {
               <HStack gap="20px" py="10px">
                 <HStack>
                   <Image src={positionIcon} alt="" boxSize="16px" />
-                  <Text fontSize="m" color="primary">
+                  <Text fontSize="xs" color="primary">
                     {mission.event.addr2}
                   </Text>
                 </HStack>
                 <Link href={`/event/${mission.event.id}`} _hover={{ textDecoration: 'none' }}>
                   <HStack>
                     <Image src={starIcon} alt="" boxSize="16px" />
-                    <Text fontSize="m" color="primary">
+                    <Text fontSize="xs" color="primary">
                       {mission.event.title}
                     </Text>
                   </HStack>
@@ -159,7 +159,7 @@ export default function MissionPageContent({ mission }: MissionDetailProps) {
               <VStack>
                 <HStack justifyContent="space-between" w="full">
                   <HStack gap="4px">
-                    <Tag fontSize="m" fontWeight="light" bg="secondary" color="white" rounded="5">
+                    <Tag fontSize="xs" fontWeight="light" bg="secondary" color="white" rounded="5">
                       {mission.tag === 'MARKET'
                         ? '시장'
                         : mission.tag === 'FESTIVAL'
@@ -168,16 +168,16 @@ export default function MissionPageContent({ mission }: MissionDetailProps) {
                             ? '공연/전시'
                             : '기타'}
                     </Tag>
-                    <Tag fontSize="m" fontWeight="light" bg="primary" color="white">
+                    <Tag fontSize="xs" fontWeight="light" bg="primary" color="white">
                       진행중
                     </Tag>
-                    <Tag fontSize="m" fontWeight="light" variant="outline" color="primary">
+                    <Tag fontSize="xs" fontWeight="light" variant="outline" color="primary">
                       {mission.difficulty === 'EASY' ? '쉬움' : mission.difficulty === 'NORMAL' ? '보통' : '어려움'}
                     </Tag>
                   </HStack>
                   <Tag bg="black" color="white" rounded="20px" px="10px" py="5px">
                     <TagLeftIcon boxSize="16px" as={Image} src={checkIcon} alt="" />
-                    <TagLabel fontSize="m">
+                    <TagLabel fontSize="xs">
                       참여자 {mission.missionHolders.filter((holders) => holders.status === 'COMPLETE').length}명
                     </TagLabel>
                   </Tag>
@@ -187,11 +187,11 @@ export default function MissionPageContent({ mission }: MissionDetailProps) {
           </Card>
           <Card w="100%">
             <CardBody>
-              <Text fontSize="l" color="secondary" fontWeight="bold" pb="5px">
+              <Text fontSize="m" color="secondary" fontWeight="medium" pb="5px">
                 미션 내용
               </Text>
               {mission.info.split('<br>').map((line, index) => (
-                <Text key={index} fontSize="m" color="black" fontWeight="bold">
+                <Text key={index} fontSize="m" color="black" fontWeight="medium">
                   {line}
                 </Text>
               ))}
