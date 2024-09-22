@@ -315,23 +315,35 @@ export default function MissionPageContent({ mission }: MissionDetailProps) {
           </Card>
         </VStack>
         {message != endMessage && message != startMessage && message != '' && (
-          <Button
-            position="absolute"
-            bottom="80px"
-            h="50px"
-            left="0"
-            right="0"
-            marginX="20px"
-            rounded="8px"
-            colorScheme="primary"
-            boxShadow="lg"
-            zIndex="1000"
-            gap="5px"
-            onClick={onOpen}
-          >
-            <Image src={uploadIcon} alt=""></Image>
-            <Text fontWeight="normal">사진 업로드</Text>
-          </Button>
+          <>
+            <Box h="60px" />
+            <Box
+              position="fixed"
+              width="100%"
+              maxWidth="600px"
+              left="50%"
+              transform="translateX(-50%)"
+              bottom="60px"
+              px="20px"
+              py="15px"
+              zIndex={99998}
+              bg="var(--background)"
+            >
+              <Button
+                w="full"
+                h="50px"
+                rounded="8px"
+                colorScheme="primary"
+                boxShadow="lg"
+                zIndex="1000"
+                gap="5px"
+                onClick={onOpen}
+              >
+                <Image src={uploadIcon} alt=""></Image>
+                <Text fontWeight="normal">사진 업로드</Text>
+              </Button>
+            </Box>
+          </>
         )}
         <Modal isOpen={isOpen} onClose={onClose} isCentered>
           <ModalOverlay />
