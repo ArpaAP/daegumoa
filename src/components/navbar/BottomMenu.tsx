@@ -45,7 +45,7 @@ export default function BottomMenu() {
             display="flex"
             flexDirection="column"
             alignItems="center"
-            color={pathname === '/' || pathname.startsWith('events') ? activeColor : inactiveColor}
+            color={pathname === '/' || pathname.startsWith('/events') ? activeColor : inactiveColor}
           >
             <IconHome boxSize="24px" />
             <Text fontSize="8px">홈</Text>
