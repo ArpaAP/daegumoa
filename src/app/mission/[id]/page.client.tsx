@@ -172,7 +172,7 @@ export default function MissionPageContent({ mission }: MissionDetailProps) {
     formData.append('missionId', mission.id.toString());
     formData.append('image', data.image);
 
-    toast('사진을 업로드하고 있습니다...');
+    const uploadToast = toast.loading('사진을 업로드하고 있습니다...');
     setIsUploading(true);
 
     axios
@@ -183,11 +183,17 @@ export default function MissionPageContent({ mission }: MissionDetailProps) {
       })
       .then((res) => {
         if (res.status === 200) {
-          toast.success('사진 업로드를 완료했습니다.');
+          toast.success('사진 업로드를 완료했습니다.', { id: uploadToast });
 
-          router.refresh();
+          console.log(res.data);
+
+          const missionHolder = res.data.data.missionHolder as MissionHolder;
+
+          axios.get(`/api/badge/${missionHolder.userId}`).finally(() => {
+            router.refresh();
+          });
         } else {
-          toast.error('사진 업로드에 실패했습니다.');
+          toast.error('사진 업로드에 실패했습니다.', { id: uploadToast });
         }
       })
       .finally(() => {
