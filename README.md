@@ -1,4 +1,4 @@
-![로고](./src/assets/logo_vertical.svg)
+<img src="./.readme/banner.png">
 
 # 반짝반짝작은별 - 대구모아
 
