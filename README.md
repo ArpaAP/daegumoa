@@ -19,8 +19,9 @@
 
 ## 시연 영상
 
-(필수) Youtube 링크
-(선택) Github Repository 페이지에서 바로 볼 수 있도록 넣어주셔도 좋습니다.
+[시연 영상](https://youtu.be/xAUrgVyzRCw)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/xAUrgVyzRCw?si=QNCJbv_0wDMITIoE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ## 서비스 소개
 
