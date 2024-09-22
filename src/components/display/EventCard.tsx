@@ -1,36 +1,51 @@
 'use client';
 
-import positionIcon from '@/assets/icons/person.svg';
-
 import { IconPhone, IconPosition } from '@/icons';
-import { Image } from '@chakra-ui/next-js';
-import { HStack, Text, VStack } from '@chakra-ui/react';
+import { Image, Link } from '@chakra-ui/next-js';
+import { Box, HStack, Text, VStack } from '@chakra-ui/react';
 
 interface EventCardProps {
+  id: number;
   title: string;
-  startDate: string;
-  endDate: string;
+  startDate: string | null;
+  endDate: string | null;
   location: string;
   tel: string;
-  imageUrl: string;
+  imageUrl?: string | null;
 }
 
-export default function EventCard({ title, startDate, endDate, location, tel, imageUrl }: EventCardProps) {
+export default function EventCard({ id, title, startDate, endDate, location, tel, imageUrl }: EventCardProps) {
   return (
-    <HStack gap={3}>
-      <Image src={imageUrl} alt={title} width={100} height={100} w="72px" h="72px" rounded="lg" />
-      <VStack align="left" gap={0}>
-        <Text color="secondary" fontSize="xs">
-          {startDate} ~ {endDate}
-        </Text>
-        <Text fontWeight="bold">{title}</Text>
-        <HStack justify="left" color="grey" pt={0.5} gap={1}>
-          <IconPosition boxSize="14px" />
-          <Text fontSize="s">{location}</Text>
-          <IconPhone boxSize="14px" />
-          <Text fontSize="s">{tel}</Text>
-        </HStack>
-      </VStack>
-    </HStack>
+    <Link href={`/events/${id}`} prefetch _hover={{ textDecoration: 'none' }}>
+      <HStack gap={3}>
+        {imageUrl ? (
+          <Image src={imageUrl} alt={title} width={100} height={100} w="72px" h="72px" rounded="lg" />
+        ) : (
+          <Box w="72px" h="72px" bgColor="#ccc" rounded="lg">
+            <Text fontSize="xs" color="white" textAlign="center" pt="30px">
+              이미지 없음
+            </Text>
+          </Box>
+        )}
+        <VStack align="left" gap={0}>
+          {(startDate || endDate) && (
+            <Text color="secondary" fontSize="xs">
+              {startDate} ~ {endDate}
+            </Text>
+          )}
+          <Text fontWeight="bold">{title}</Text>
+          <HStack justify="left" color="grey" pt={0.5} gap={1}>
+            <IconPosition boxSize="14px" />
+            <Text fontSize="s" noOfLines={1}>
+              {location.replace('대구광역시', '')}
+            </Text>
+            <IconPhone boxSize="14px" />
+            <Text fontSize="s" flexShrink={0}>
+              {tel}
+            </Text>
+          </HStack>
+        </VStack>
+      </HStack>
+    </Link>
   );
 }
