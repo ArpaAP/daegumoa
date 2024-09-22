@@ -1,5 +1,6 @@
 'use client';
 
+import BottomMenu from '@/components/navbar/BottomMenu';
 import Badge from '@/components/profile/Badge';
 
 import mainRankIcon from '@/assets/icons/main_rank.svg';
@@ -180,6 +181,8 @@ export default function ProfileViewPage({ userId }: ProfileViewPageProps) {
           </VStack>
         </Flex>
       </Flex>
+
+      <BottomMenu />
     </>
   );
 }
