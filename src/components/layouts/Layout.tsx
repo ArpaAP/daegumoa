@@ -3,14 +3,12 @@
 import { useEffect } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
-import BottomMenu from '../navbar/BottomMenu';
 import '@/transition/fade-slide.css';
 import { Box } from '@chakra-ui/react';
 import { css } from '@emotion/react';
 import { usePathname } from 'next/navigation';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const noNav = ['/login', 'register']; // 내비바가 없을 경로
   const pathname = usePathname();
 
   useEffect(() => {
@@ -56,7 +54,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           {children}
         </CSSTransition>
       </TransitionGroup>
-      {!noNav.includes(pathname) && <BottomMenu pathname={pathname} />}
     </Box>
   );
 }

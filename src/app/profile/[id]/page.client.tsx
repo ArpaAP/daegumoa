@@ -1,14 +1,15 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import QRCode from 'react-qr-code';
 
-import BottomMenu from '@/components/navbar/BottomMenu';
 import Badge from '@/components/profile/Badge';
 
 import editColoredIcon from '@/assets/icons/edit_colored.svg';
 import linkIcon from '@/assets/icons/link.svg';
 import logoWithText from '@/assets/icons/logo_with_text.svg';
 import mainRankIcon from '@/assets/icons/main_rank.svg';
+import personIcon from '@/assets/icons/person.svg';
 import rankIcon from '@/assets/icons/rank.svg';
 import starFilledIcon from '@/assets/icons/star_filled.svg';
 import uploadIcon from '@/assets/icons/upload.svg';
@@ -29,11 +30,18 @@ import {
   Text,
   useDisclosure,
   VStack,
+  Tooltip,
 } from '@chakra-ui/react';
-import { User } from '@prisma/client';
+import { User, Badge as prismaBadge, BadgeHolder, EventHolder, MissionHolder, Event } from '@prisma/client';
 import { useRouter } from 'next/navigation';
 
-type NewUser = User & { profileImg: string };
+// BadgeHolder에 관련된 Badge 포함
+type NewBadgeHolder = BadgeHolder & { badge: prismaBadge };
+type NewEventHolder = EventHolder & { event: Event };
+// User에 대표 뱃지와 badgeHolders 포함
+type NewUser = User & { badge: prismaBadge | null } & { badgeHolders: NewBadgeHolder[] } & {
+  missionHolders: MissionHolder[];
+} & { eventHolders: NewEventHolder[] };
 
 interface ProfileProps {
   user?: NewUser | null;
@@ -41,28 +49,34 @@ interface ProfileProps {
 
 export default function ProfileContent({ user }: ProfileProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [fullUrl, setFullUrl] = useState('');
+
   const router = useRouter();
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const currentUrl = window.location.href; // 전체 URL 가져오기
+      setFullUrl(currentUrl);
+    }
+  }, [router]);
+
+  const [copied, setCopied] = useState(false);
+
+  const copyToClipboard = async () => {
+    try {
+      const textToCopy = fullUrl; // 복사할 텍스트
+      await navigator.clipboard.writeText(textToCopy);
+      setCopied(true); // 복사 성공 시 상태 업데이트
+    } catch (err) {
+      console.error('Failed to copy text:', err);
+      setCopied(false); // 복사 실패 시 상태 업데이트
+    }
+  };
 
   // 유저가 없으면 다른 화면 보여주기
   if (!user) {
     return <></>;
   }
-
-  const badge_list = [
-    { level: 1, name: '초보 탐험가', desc: '시장을 1개 방문하세요.' },
-    { level: 2, name: '중수 탐험가', desc: '시장을 3개 방문하세요.' },
-    { level: 3, name: '전문적인 탐험가', desc: '시장을 5개 방문하세요.' },
-    { level: 4, name: '위대한 탐험가', desc: '시장을 10개 방문하세요.' },
-    { level: 5, name: '맛집헌터', desc: '시장 속 숨은 맛집을 찾으세요.' },
-    { level: 5, name: '마라톤 완주', desc: '마라톤을 1회 완주하세요.' },
-    { level: 1, name: '소심한 방문객', desc: '행사에 1회 참가하세요.' },
-    { level: 2, name: '익숙한 방문객', desc: '행사제 3회 참가하세요.' },
-    { level: 5, name: '치맥 사랑꾼', desc: '치맥 페스티벌에 참가하세요.' },
-    { level: 1, name: '피곤한 리스너', desc: '강의를 1개 청강하세요.' },
-    { level: 2, name: '궁금한 리스너', desc: '강의를 3개 청강하세요.' },
-    { level: 3, name: '손을 든 리스너', desc: '강의를 5개 청강하세요.' },
-    { level: 4, name: '똑똑한 리스너', desc: '강의를 10개 청강하세요.' },
-  ];
 
   return (
     <>
@@ -78,14 +92,16 @@ export default function ProfileContent({ user }: ProfileProps) {
             <VStack mt="20px">
               <HStack spacing="20px" margin="20px 0px">
                 <Image src={logoWithText} alt="대구모아 로고" />
-                <QRCode size={110} value={` https://daegumoa.arpaap.dev/view/${user.nickname}`} />
+                <QRCode size={110} value={fullUrl} />
               </HStack>
-              <HStack>
-                <Image src={linkIcon} alt="링크 아이콘" />
-                <Link href={`/view?user=${user.nickname}`} fontSize="xs" fontWeight="regular" color="primary">
-                  https://daegumoa.arpaap.dev
-                </Link>
-              </HStack>
+              <Tooltip hasArrow label={copied ? '복사됨' : '클릭하여 복사'} bgColor="secondary">
+                <HStack onClick={copyToClipboard} cursor="pointer" _active={{ transform: 'scale(0.95)' }}>
+                  <Image src={linkIcon} alt="링크 아이콘" />
+                  <Text fontSize="xs" fontWeight="regular" color="primary">
+                    {fullUrl}
+                  </Text>
+                </HStack>
+              </Tooltip>
             </VStack>
           </ModalBody>
         </ModalContent>
@@ -100,12 +116,12 @@ export default function ProfileContent({ user }: ProfileProps) {
             height="72"
             boxSize="72px"
             borderRadius="full"
-            src={user.profileImg}
+            src={user.profileImg || personIcon}
             alt={`${user.nickname}님의 프로필 이미지`}
             priority
           />
           <div>
-            <Badge info={badge_list[4]} />
+            {user.badge ? <Badge info={user.badge} /> : <Box h="28px"></Box>}
             <Text fontSize="xl" fontWeight="bold" color="primary.shade4">
               {user.name}님
             </Text>
@@ -154,13 +170,13 @@ export default function ProfileContent({ user }: ProfileProps) {
               </Text>
             </HStack>
             <Text fontSize="s" fontWeight="medium" color="secondary">
-              13개
+              {user.badgeHolders.length}개
             </Text>
           </HStack>
           {/* 콘텐츠 */}
           <Flex flexWrap="wrap" gap="8px">
-            {badge_list.map((info, index) => (
-              <Badge key={index} info={info} />
+            {user.badgeHolders.map((badgeHolder, index) => (
+              <Badge key={index} info={badgeHolder.badge} />
             ))}
           </Flex>
         </Flex>
@@ -183,7 +199,7 @@ export default function ProfileContent({ user }: ProfileProps) {
           </HStack>
           {/* 콘텐츠 */}
           {/* 1. 주요 랭킹 디스플레이 */}
-          <Flex
+          {/* <Flex
             width="100%"
             p="20px 20px 16px 20px"
             borderRadius="10px"
@@ -192,14 +208,14 @@ export default function ProfileContent({ user }: ProfileProps) {
             alignItems="center"
             backgroundColor="#F3F3F3"
           >
-            <Text>시장을 좋아하는 Mania</Text>
+            <Text>수집한 뱃지 수 랭킹</Text>
             <HStack spacing="8px">
               <Image w="32px" h="48px" src={mainRankIcon} alt="주요 랭크" />
               <Text fontSize="xl" fontWeight="bold" color="primary">
                 1위
               </Text>
             </HStack>
-          </Flex>
+          </Flex> */}
           {/* 2. 4분야 참여 수 디스플레이 */}
           <VStack align="stretch">
             <HStack>
@@ -209,44 +225,42 @@ export default function ProfileContent({ user }: ProfileProps) {
                   참여한 행사 수
                 </Text>
                 <Text fontSize="28px" fontWeight="black" color="white">
-                  17
+                  {user.eventHolders.length}
                 </Text>
               </Box>
-              {/* 2.1.2. 둘러본 시장 수 */}
+              {/* 2.1.2. 성공한 미션 수 */}
               <Box width="100%" p="16px" borderRadius="10px" backgroundColor="primary.shade4">
                 <Text fontSize="s" fontWeight="light" color="white" opacity="0.5">
-                  둘러본 시장 수
+                  성공한 미션 수
                 </Text>
                 <Text fontSize="28px" fontWeight="black" color="white">
-                  4
+                  {user.missionHolders.filter((holders) => holders.status === 'COMPLETE').length}
                 </Text>
               </Box>
             </HStack>
             <HStack>
-              {/* 2.2.1. 성공한 미션 수 */}
+              {/* 2.2.1. 둘러본 시장 수 */}
               <Card variant="outline" width="100%" p="16px" borderRadius="10px" borderColor="success">
                 <Text fontSize="s" fontWeight="light" color="success">
-                  성공한 미션 수
+                  둘러본 시장 수
                 </Text>
                 <Text fontSize="28px" fontWeight="black" color="success">
-                  5
+                  {user.eventHolders.filter((holders) => holders.event.tag === 'MARKET').length}
                 </Text>
               </Card>
-              {/* 2.2.2. 청강한 강의 수 */}
+              {/* 2.2.2. 방문한 축제 수 */}
               <Card variant="outline" width="100%" p="16px" borderRadius="10px" borderColor="primary">
                 <Text fontSize="s" fontWeight="light" color="primary">
-                  성공한 미션 수
+                  방문한 축제 수
                 </Text>
                 <Text fontSize="28px" fontWeight="black" color="primary">
-                  5
+                  {user.eventHolders.filter((holders) => holders.event.tag === 'FESTIVAL').length}
                 </Text>
               </Card>
             </HStack>
           </VStack>
         </Flex>
       </Flex>
-
-      <BottomMenu />
     </>
   );
 }

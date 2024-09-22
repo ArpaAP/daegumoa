@@ -21,5 +21,7 @@ export default async function Home() {
     return redirect('/register');
   }
 
-  return <HomePage />;
+  const events = await prisma.event.findMany({});
+
+  return <HomePage events={events} />;
 }

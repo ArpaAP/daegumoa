@@ -18,17 +18,17 @@ model User {
   email        String   @unique
   name         String?
   nickname     String?
-  profileImgId Int?
+  profileImg   String?
   badgeId      Int?
   createdDate  DateTime @default(now())
   modifiedDate DateTime @default(now()) @updatedAt
 
-  profileImg Image? @relation("ProfileImg", fields: [profileImgId], references: [id])
-  badge      Badge? @relation("UserBadge", fields: [badgeId], references: [id])
+  badge Badge? @relation("UserBadge", fields: [badgeId], references: [id])
 
   eventHolders   EventHolder[]
   missionHolders MissionHolder[]
   badgeHolders   BadgeHolder[]
+  imageId        Int?
 }
 
 model Event {
@@ -75,7 +75,6 @@ model Image {
   alt            String
   createdDate    DateTime        @default(now())
   modifiedDate   DateTime        @default(now()) @updatedAt
-  users          User[]          @relation("ProfileImg")
   missionHolders MissionHolder[]
 }
 
