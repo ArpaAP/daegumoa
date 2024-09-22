@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 
 import dayjs from 'dayjs';
 
+import BottomMenu from '@/components/navbar/BottomMenu';
+
 import checkIcon from '@/assets/icons/check.svg';
 import clockDanger from '@/assets/icons/clock_danger.svg';
 import clockSuccess from '@/assets/icons/clock_success.svg';
@@ -93,143 +95,146 @@ export default function MissionPageContent({ mission }: MissionDetailProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Box h="100dvh" px="20px" py="30px" w="full">
-      <Link href="/mission" _hover={{ textDecoration: 'none' }}>
-        <HStack px="10px" py="20px">
-          <Image src={prevIcon} alt="" boxSize="16px" />
-          <Text fontSize="xl" color="primary" fontWeight="Bold">
-            미션 정보
-          </Text>
-        </HStack>
-      </Link>
-      <VStack gap="20px" pb="150px">
-        <Box
-          position="relative"
-          w="100%"
-          h="200"
-          backgroundImage={mission.missionImg}
-          bgSize="cover"
-          bgRepeat="no-repeat"
-          bgPosition="center"
-          rounded="10px"
-        >
-          <Box
-            position="absolute"
-            top="0"
-            left="0"
-            w="100%"
-            h="100%"
-            bgGradient="linear(to-t, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0))"
-            borderRadius="md"
-          />
-        </Box>
-        <Card w="100%">
-          <CardBody>
-            <HStack>
-              <Image src={message.includes('일') ? clockSuccess : clockDanger} alt="" boxSize="14px" p="0" />
-              <Text fontWeight="bold" color={message.includes('일') ? 'success' : 'danger'} fontSize="m">
-                {message}
-              </Text>
-            </HStack>
-
-            <Text fontWeight="bold" color="black" fontSize="xl">
-              {mission.title}
+    <>
+      <Box h="100dvh" px="20px" py="30px" w="full">
+        <Link href="/mission" _hover={{ textDecoration: 'none' }}>
+          <HStack px="10px" py="20px">
+            <Image src={prevIcon} alt="" boxSize="16px" />
+            <Text fontSize="xl" color="primary" fontWeight="Bold">
+              미션 정보
             </Text>
-
-            <HStack gap="20px" py="10px">
+          </HStack>
+        </Link>
+        <VStack gap="20px" pb="150px">
+          <Box
+            position="relative"
+            w="100%"
+            h="200"
+            backgroundImage={mission.missionImg}
+            bgSize="cover"
+            bgRepeat="no-repeat"
+            bgPosition="center"
+            rounded="10px"
+          >
+            <Box
+              position="absolute"
+              top="0"
+              left="0"
+              w="100%"
+              h="100%"
+              bgGradient="linear(to-t, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0))"
+              borderRadius="md"
+            />
+          </Box>
+          <Card w="100%">
+            <CardBody>
               <HStack>
-                <Image src={positionIcon} alt="" boxSize="16px" />
-                <Text fontSize="m" color="primary">
-                  {mission.event.addr2}
+                <Image src={message.includes('일') ? clockSuccess : clockDanger} alt="" boxSize="14px" p="0" />
+                <Text fontWeight="bold" color={message.includes('일') ? 'success' : 'danger'} fontSize="m">
+                  {message}
                 </Text>
               </HStack>
-              <Link href={`/event/${mission.event.id}`} _hover={{ textDecoration: 'none' }}>
+
+              <Text fontWeight="bold" color="black" fontSize="xl">
+                {mission.title}
+              </Text>
+
+              <HStack gap="20px" py="10px">
                 <HStack>
-                  <Image src={starIcon} alt="" boxSize="16px" />
+                  <Image src={positionIcon} alt="" boxSize="16px" />
                   <Text fontSize="m" color="primary">
-                    {mission.event.title}
+                    {mission.event.addr2}
                   </Text>
                 </HStack>
-              </Link>
-            </HStack>
+                <Link href={`/event/${mission.event.id}`} _hover={{ textDecoration: 'none' }}>
+                  <HStack>
+                    <Image src={starIcon} alt="" boxSize="16px" />
+                    <Text fontSize="m" color="primary">
+                      {mission.event.title}
+                    </Text>
+                  </HStack>
+                </Link>
+              </HStack>
 
-            <VStack>
-              <HStack justifyContent="space-between" w="full">
-                <HStack gap="4px">
-                  <Tag fontSize="m" fontWeight="light" bg="secondary" color="white" rounded="5">
-                    {mission.tag === 'MARKET'
-                      ? '시장'
-                      : mission.tag === 'FESTIVAL'
-                        ? '축제'
-                        : mission.tag === 'PERFORM'
-                          ? '공연/전시'
-                          : '기타'}
-                  </Tag>
-                  <Tag fontSize="m" fontWeight="light" bg="primary" color="white">
-                    진행중
-                  </Tag>
-                  <Tag fontSize="m" fontWeight="light" variant="outline" color="primary">
-                    {mission.difficulty === 'EASY' ? '쉬움' : mission.difficulty === 'NORMAL' ? '보통' : '어려움'}
+              <VStack>
+                <HStack justifyContent="space-between" w="full">
+                  <HStack gap="4px">
+                    <Tag fontSize="m" fontWeight="light" bg="secondary" color="white" rounded="5">
+                      {mission.tag === 'MARKET'
+                        ? '시장'
+                        : mission.tag === 'FESTIVAL'
+                          ? '축제'
+                          : mission.tag === 'PERFORM'
+                            ? '공연/전시'
+                            : '기타'}
+                    </Tag>
+                    <Tag fontSize="m" fontWeight="light" bg="primary" color="white">
+                      진행중
+                    </Tag>
+                    <Tag fontSize="m" fontWeight="light" variant="outline" color="primary">
+                      {mission.difficulty === 'EASY' ? '쉬움' : mission.difficulty === 'NORMAL' ? '보통' : '어려움'}
+                    </Tag>
+                  </HStack>
+                  <Tag bg="black" color="white" rounded="20px" px="10px" py="5px">
+                    <TagLeftIcon boxSize="16px" as={Image} src={checkIcon} alt="" />
+                    <TagLabel fontSize="m">
+                      참여자 {mission.missionHolders.filter((holders) => holders.status === 'COMPLETE').length}명
+                    </TagLabel>
                   </Tag>
                 </HStack>
-                <Tag bg="black" color="white" rounded="20px" px="10px" py="5px">
-                  <TagLeftIcon boxSize="16px" as={Image} src={checkIcon} alt="" />
-                  <TagLabel fontSize="m">
-                    참여자 {mission.missionHolders.filter((holders) => holders.status === 'COMPLETE').length}명
-                  </TagLabel>
-                </Tag>
-              </HStack>
-            </VStack>
-          </CardBody>
-        </Card>
-        <Card w="100%">
-          <CardBody>
-            <Text fontSize="l" color="secondary" fontWeight="bold" pb="5px">
-              미션 내용
-            </Text>
-            {mission.info.split('<br>').map((line, index) => (
-              <Text key={index} fontSize="m" color="black" fontWeight="bold">
-                {line}
+              </VStack>
+            </CardBody>
+          </Card>
+          <Card w="100%">
+            <CardBody>
+              <Text fontSize="l" color="secondary" fontWeight="bold" pb="5px">
+                미션 내용
               </Text>
-            ))}
-          </CardBody>
-        </Card>
-      </VStack>
-      {message != endMessage && message != startMessage && message != '' && (
-        <Button
-          position="absolute"
-          bottom="80px"
-          h="50px"
-          left="0"
-          right="0"
-          marginX="20px"
-          rounded="8px"
-          colorScheme="primary"
-          boxShadow="lg"
-          zIndex="1000"
-          gap="5px"
-          onClick={onOpen}
-        >
-          <Image src={uploadIcon} alt=""></Image>
-          <Text fontWeight="normal">사진 업로드</Text>
-        </Button>
-      )}
-      <Modal isOpen={isOpen} onClose={onClose} isCentered>
-        <ModalOverlay />
-        <ModalContent w="full" mx="20px">
-          <ModalHeader>사진 업로드</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Text>미션을 수행한 사진을 업로드해주세요.</Text>
-          </ModalBody>
+              {mission.info.split('<br>').map((line, index) => (
+                <Text key={index} fontSize="m" color="black" fontWeight="bold">
+                  {line}
+                </Text>
+              ))}
+            </CardBody>
+          </Card>
+        </VStack>
+        {message != endMessage && message != startMessage && message != '' && (
+          <Button
+            position="absolute"
+            bottom="80px"
+            h="50px"
+            left="0"
+            right="0"
+            marginX="20px"
+            rounded="8px"
+            colorScheme="primary"
+            boxShadow="lg"
+            zIndex="1000"
+            gap="5px"
+            onClick={onOpen}
+          >
+            <Image src={uploadIcon} alt=""></Image>
+            <Text fontWeight="normal">사진 업로드</Text>
+          </Button>
+        )}
+        <Modal isOpen={isOpen} onClose={onClose} isCentered>
+          <ModalOverlay />
+          <ModalContent w="full" mx="20px">
+            <ModalHeader>사진 업로드</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <Text>미션을 수행한 사진을 업로드해주세요.</Text>
+            </ModalBody>
 
-          <ModalFooter>
-            <Button colorScheme="primary" mr={3} onClick={onClose}>
-              업로드
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-    </Box>
+            <ModalFooter>
+              <Button colorScheme="primary" mr={3} onClick={onClose}>
+                업로드
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+      </Box>
+      <BottomMenu />
+    </>
   );
 }
