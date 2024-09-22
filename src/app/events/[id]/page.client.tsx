@@ -39,6 +39,19 @@ export default function EventDetailPage({ event }: EventDetailProps) {
             bgPosition="center"
             rounded="10px"
           >
+            {!event.mainImg && (
+              <Text
+                position="absolute"
+                top="50%"
+                left="50%"
+                transform="translate(-50%, -50%)"
+                color="#ccc"
+                fontSize="xl"
+                fontWeight="bold"
+              >
+                이미지 없음
+              </Text>
+            )}
             <Box
               position="absolute"
               top="0"
