@@ -5,14 +5,14 @@ import BottomMenu from '@/components/navbar/BottomMenu';
 
 import banner from '@/assets/banner.png';
 
+import { Image } from '@chakra-ui/next-js';
 import { Box, Card, CardBody, Input, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack } from '@chakra-ui/react';
-import Image from 'next/image';
 
 export default function HomePage() {
   return (
     <>
       <VStack px={6} py={12} gap={6} align="left">
-        <Image src={banner} alt="banner" width={375} height={200} />
+        <Image src={banner} alt="banner" width={375} height={200} w="full" h="auto" />
 
         <Box>
           <Text fontSize="24px" fontWeight="bold" color="primary">
