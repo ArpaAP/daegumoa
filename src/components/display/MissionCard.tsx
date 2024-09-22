@@ -111,7 +111,7 @@ const MissionCard: React.FC<MissionCardProps> = ({ mission }) => {
             boxShadow="0 4px 6px rgba(0, 0, 0, 0.1)" // 부드러운 그림자
           >
             <TagLeftIcon boxSize="16px" as={Image} src={positionIcon} alt="" />
-            <TagLabel fontSize="m" fontWeight="bold">
+            <TagLabel fontSize="xs" fontWeight="bold">
               {mission.event.addr2}
             </TagLabel>
           </Tag>
