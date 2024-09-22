@@ -21,8 +21,6 @@
 
 [시연 영상](https://youtu.be/xAUrgVyzRCw)
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/xAUrgVyzRCw?si=QNCJbv_0wDMITIoE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
 ## 서비스 소개
 
 ### 서비스 개요
